@@ -179,20 +179,82 @@
                             <!-- Contact Area -->
                             <div class="contact-form-area contact-page">
                                 <h4 class="mb-50">Request a Service</h4>
-                                <h6>dsdsfd</h6>
+                                <div style="color: white"> <li>Kindly select the Service before you start filling in the details!!</li><br>
+                                <li>All fields are mandatory *</li><br>
+                                <li>Once you are satisfied with your Service application go to submit application tab and submit your application</li> </div><br>
 
                                 <form action="send.php" method="post" enctype="text/plain">
                                     <div class="row">
+
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="cars" style="color: white">Choose a Service:</label>
+                                          <select name="cars" type ="cars">
+                                            <option>---Select a Service---</option>
+                                            <option value="volvo">Service 1</option>
+                                            <option value="saab">Service 2</option>
+                                            <option value="opel">Service 3</option>
+                                            <option value="audi">Service 4</option>
+                                          </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="cars" style="color: white">Salutation</label>
+                                          <select name="cars" type ="cars">
+                                            <option>---Select---</option>
+                                            <option value="volvo">Mr</option>
+                                            <option value="saab">Mrs</option>
+                                            <option value="opel">Rev</option>
+                                            <option value="audi">Prof</option>
+                                          </select>
+                                            </div>
+                                        </div>
+
+
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                                                <input type="text" class="form-control" name="idnumber" placeholder="Passport/ID Number" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <input type="email" class="form-control" name="email" placeholder="Your E-mail"required>
+                                                 <p style="color: white">Please select your gender:</p>
+                                                  <input type="radio" id="male" name="gender" value="male">
+                                                  <label for="male" style="color: white">Male</label><br>
+                                                  <input type="radio" id="female" name="gender" value="female">
+                                                  <label for="male" style="color: white">Female</label><br>
                                             </div>
                                         </div>
+
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="name" placeholder="First Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="email" placeholder="Last Name"required>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control" name="name" placeholder="Your Email" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <input type="tel" class="form-control" name="email" placeholder="Your Phone No."required>
+                                            </div>
+                                        </div>
+
+
+
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="subject" placeholder="Your Subject"required>
