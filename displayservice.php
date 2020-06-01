@@ -17,27 +17,7 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
-
-/* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
  
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-</style>
 
 </head>
 
@@ -174,11 +154,11 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcrumb-content">
-                        <h2>Services</h2>
+                        <h2>ADMIN DASHBOARD</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Services</li>
+                                <li class="breadcrumb-item active" aria-current="page">ADMIN</li>
                             </ol>
                         </nav>
                     </div>
@@ -188,17 +168,12 @@
     </section>
     <!-- ##### Breadcrumb Area End ##### -->
 
-
-    <div class="row">
-  <div class="column" style="background-color:#aaa;">
-    HERE
-  </div>
-  <div class="column" style="background-color:#bbb;">
-    <p><p><section class="credit-faq-area section-padding-100-0">
+  <!-- ##### FAQ Area Start ###### -->
+    <section class="credit-faq-area section-padding-100-0">
         <div class="container">
             <div class="row">
                 <!-- FAQ Area -->
-                <div class="col-12 col-md-12">
+                <div class="col-12 col-lg-8">
 
                     <div class="accordions mb-100" id="accordion" role="tablist" aria-multiselectable="true">
                         <!-- single accordian area -->
@@ -208,11 +183,10 @@
                                     <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                     </a></h6>
                             <div id="collapseOne" class="accordion-content collapse show">
-                                
                                 <?php 
     $con=mysqli_connect("localhost",'root',"","profwaititu");
     if($con){
-        $qry= "SELECT * FROM request WHERE status='pending' ORDER BY tid DESC  LIMIT 10";
+        $qry= "SELECT * FROM request WHERE status='pending' ORDER BY tid DESC  LIMIT 2";
         echo "<h3> NEW UNREAD MESSAGES</H3> <br>";
         $result= mysqli_query($con,$qry);
         if(mysqli_num_rows($result)>0){
@@ -220,7 +194,7 @@
                 $rowcount=mysqli_num_rows($result);
                 echo $rowcount."<strong style='color: red'> New Messages <br> </strong>";
                 echo "<strong style='color: red'>Status: </strong>".$row['status'];
-                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<a href='approveadmins.php?id=$id'><button><b>confirm<b></button></a>"."<hr>";
+                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<a href='approveadmins.php?id=$id'><button><b>Click To Mark as Read<b></button></a>"."<hr>";
 
             }
         }
@@ -233,20 +207,41 @@
     }
 
  ?>
-
                             </div>
                         </div>
                         <!-- single accordian area -->
                         <div class="panel single-accordion">
                             <h6>
-                                <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">Years of Experience
+                                <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">READ MESSAGES
                                         <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                         <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                         </a>
                             </h6>
                             <div id="collapseTwo" class="accordion-content collapse">
-                                <p><strong>15+ YEARS OF EXPERIENCE</strong> <br>
-                                We have worked in global value chains and accumulated valuable knowledge over the years which we diffuse into the domestic market.<br> </p>
+                                 <?php 
+    $con=mysqli_connect("localhost",'root',"","profwaititu");
+    if($con){
+        $qry= "SELECT * FROM request WHERE status='read' ORDER BY tid DESC  LIMIT 10";
+        echo "<h3> NEW UNREAD MESSAGES</H3> <br>";
+        $result= mysqli_query($con,$qry);
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                $rowcount=mysqli_num_rows($result);
+                echo $rowcount."<strong style='color: red'> New Messages <br> </strong>";
+                echo "<strong style='color: red'>Status: </strong>".$row['status'];
+                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<a href='approveadmins.php?id=$id'><button><b>Click To Mark as Read<b></button></a>"."<hr>";
+
+            }
+        }
+        else{
+            echo "nothing in table";
+        }
+    }
+    else{
+        echo "error";
+    }
+
+ ?>
                             </div>
                         </div>
                         <!-- single accordian area -->
@@ -264,19 +259,17 @@
                     </div>
                 </div>
 
-               
+                <!-- Add Area -->
+                <div class="col-12 col-md-4">
+                    <div class="add-area mb-100">
+                        <p>sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </section></p></p>
-  </div>
-</div>
-
-  
-
-
-    <!-- ##### FAQ Area Start ###### -->
-    
+    </section>
     <!-- ##### FAQ Area End ###### -->
+
 
       <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0">
