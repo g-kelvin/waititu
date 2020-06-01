@@ -17,6 +17,28 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+ 
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
 </head>
 
 <body>
@@ -38,7 +60,7 @@
                 <div class="row h-100 align-items-center">
                     <div class="col-12 d-flex justify-content-between">
                         <!-- Logo Area -->
-                        <div class="logo">
+                         <div class="logo">
                             <!-- <a href="index.html" style="color: #0000A0" >  <STRONG >Njeru Nyaga & Company</STRONG>  <BR><SMALL  >&nbsp;&nbsp;&nbsp;Certified Public Accountants</SMALL>  </a> -->
                              <a href="index.html"><img src="img/core-img/p-01.png" alt=""></a>
                         </div>
@@ -46,7 +68,7 @@
                         <!-- Top Contact Info -->
                         <div class="top-contact-info d-flex align-items-center">
                             <a href="#" data-toggle="tooltip" data-placement="bottom" title="P.O Box 1234, Block H, Waititu Plaza, 2nd Flr, Mombasa Road ,Nairobi - Kenya"><img src="img/core-img/placeholder.png" alt=""> <span>P.O Box 1234, Block H, Waititu Plaza, 2nd Flr, Mombasa Road ,Nairobi - Kenya</span></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="info@njerunyaga.co.ke"><img src="img/core-img/message.png" alt=""> <span>info@njerunyaga.co.ke</span></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="info@profwaititu.co.ke"><img src="img/core-img/message.png" alt=""> <span>info@profwaititu.co.ke</span></a>
                         </div>
                     </div>
                 </div>
@@ -152,127 +174,111 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcrumb-content">
-                        <h2>Client Portal</h2>
+                        <h2>Services</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Request Service Portal</li>
+                                <li class="breadcrumb-item active" aria-current="page">Services</li>
                             </ol>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-    </section><br><br>
+    </section>
     <!-- ##### Breadcrumb Area End ##### -->
 
-    
 
-        <!-- ##### Google Maps ##### -->
-        <div class="map-area">
-            
-            <!-- Contact Area -->
-            <div class="contact---area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-10">
-                            <!-- Contact Area -->
-                            <div class="contact-form-area contact-page">
-                                <h4 class="mb-50">Request a Service</h4>
-                                <div style="color: white"> <li>Kindly select the Service before you start filling in the details!!</li><br>
-                                <li>All fields are mandatory *</li><br>
-                                <li>Once you are satisfied with your Service application go to submit application tab and submit your application</li> </div><br>
+    <div class="row">
+  <div class="column" style="background-color:#aaa;">
+    HERE
+  </div>
+  <div class="column" style="background-color:#bbb;">
+    <p><p><section class="credit-faq-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <!-- FAQ Area -->
+                <div class="col-12 col-md-12">
 
-                                <form action="serviceform.php" method="post">
-                                    <div class="row">
+                    <div class="accordions mb-100" id="accordion" role="tablist" aria-multiselectable="true">
+                        <!-- single accordian area -->
+                        <div class="panel single-accordion">
+                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">New Request Messages
+                                    <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                    </a></h6>
+                            <div id="collapseOne" class="accordion-content collapse show">
+                                
+                                <?php 
+    $con=mysqli_connect("localhost",'root',"","profwaititu");
+    if($con){
+        $qry= "SELECT * FROM request WHERE status='pending' ORDER BY tid DESC  LIMIT 10";
+        echo "<h3> NEW UNREAD MESSAGES</H3> <br>";
+        $result= mysqli_query($con,$qry);
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                $rowcount=mysqli_num_rows($result);
+                echo $rowcount."<strong style='color: red'> New Messages <br> </strong>";
+                echo "<strong style='color: red'>Status: </strong>".$row['status'];
+                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<a href='approveadmins.php?id=$id'><button><b>confirm<b></button></a>"."<hr>";
 
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="service" style="color: white">Choose a Service:</label>
-                                          <select name="service" type ="text">
-                                            <option>---Select a Service---</option>
-                                            <option value="Service 1">Service 1</option>
-                                            <option value="Service 2">Service 2</option>
-                                            <option value="Service 3">Service 3</option>
-                                            <option value="Service 4">Service 4</option>
-                                          </select>
-                                            </div>
-                                        </div>
+            }
+        }
+        else{
+            echo "nothing in table";
+        }
+    }
+    else{
+        echo "error";
+    }
 
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="cars" style="color: white">Salutation</label>
-                                          <select name="salutation" type ="text">
-                                            <option>---Select---</option>
-                                            <option value="Mr">Mr</option>
-                                            <option value="Mrs">Mrs</option>
-                                            <option value="Rev">Rev</option>
-                                            <option value="Prof">Prof</option>
-                                          </select>
-                                            </div>
-                                        </div>
+ ?>
 
-
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="fname" placeholder="First Name" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="lname" placeholder="Last Name"required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="idnumber" placeholder="Passport/ID Number" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                 <p style="color: white">Please select your gender:</p>
-                                                  <input type="radio" id="male" name="gender" value="male">
-                                                  <label for="male" style="color: white">Male</label><br>
-                                                  <input type="radio" id="female" name="gender" value="female">
-                                                  <label for="male" style="color: white">Female</label><br>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="tel" class="form-control" name="tel" placeholder="Your Phone No."required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <textarea type="text" class="form-control" name="massage" cols="30" rows="10" placeholder="Your Request Indicating when you need the Service"required></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn credit-btn mt-30" type="submit" name="submit">Send Application</button>
-                                        </div>
-                                    </div>
-                                </form>
+                            </div>
+                        </div>
+                        <!-- single accordian area -->
+                        <div class="panel single-accordion">
+                            <h6>
+                                <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">Years of Experience
+                                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                        </a>
+                            </h6>
+                            <div id="collapseTwo" class="accordion-content collapse">
+                                <p><strong>15+ YEARS OF EXPERIENCE</strong> <br>
+                                We have worked in global value chains and accumulated valuable knowledge over the years which we diffuse into the domestic market.<br> </p>
+                            </div>
+                        </div>
+                        <!-- single accordian area -->
+                        <div class="panel single-accordion">
+                            <h6>
+                                <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">What we do Best
+                                        <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                        <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                                    </a>
+                            </h6>
+                            <div id="collapseThree" class="accordion-content collapse">
+                                <p>Morbi ut dapibus dui. Sed ut iaculis elit, quis varius mauris. Integer ut ultricies orci, lobortis egestas sem. Morbi ut dapibus dui. Sed ut iaculis elit, quis varius mauris. Integer ut ultricies orci, lobortis egestas sem. </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div><br><br>
-    </section>
-    <!-- ##### Contact Area End ##### -->
 
+               
+            </div>
+        </div>
+    </section></p></p>
+  </div>
+</div>
+
+  
+
+
+    <!-- ##### FAQ Area Start ###### -->
     
-    <!-- ##### Footer Area Start ##### -->
+    <!-- ##### FAQ Area End ###### -->
+
+      <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area section-padding-100-0">
         <div class="container">
             <div class="row">

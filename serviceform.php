@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -167,109 +167,37 @@
     <!-- ##### Breadcrumb Area End ##### -->
 
     
-
-        <!-- ##### Google Maps ##### -->
-        <div class="map-area">
-            
-            <!-- Contact Area -->
-            <div class="contact---area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-10">
-                            <!-- Contact Area -->
-                            <div class="contact-form-area contact-page">
-                                <h4 class="mb-50">Request a Service</h4>
-                                <div style="color: white"> <li>Kindly select the Service before you start filling in the details!!</li><br>
-                                <li>All fields are mandatory *</li><br>
-                                <li>Once you are satisfied with your Service application go to submit application tab and submit your application</li> </div><br>
-
-                                <form action="serviceform.php" method="post">
-                                    <div class="row">
-
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="service" style="color: white">Choose a Service:</label>
-                                          <select name="service" type ="text">
-                                            <option>---Select a Service---</option>
-                                            <option value="Service 1">Service 1</option>
-                                            <option value="Service 2">Service 2</option>
-                                            <option value="Service 3">Service 3</option>
-                                            <option value="Service 4">Service 4</option>
-                                          </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="cars" style="color: white">Salutation</label>
-                                          <select name="salutation" type ="text">
-                                            <option>---Select---</option>
-                                            <option value="Mr">Mr</option>
-                                            <option value="Mrs">Mrs</option>
-                                            <option value="Rev">Rev</option>
-                                            <option value="Prof">Prof</option>
-                                          </select>
-                                            </div>
-                                        </div>
+<?php
+$con= mysqli_connect("localhost","root", "","profwaititu");
+if($con){
+	$service = $_POST['service'];
+	$salutation = $_POST['salutation'];
+	$fname = $_POST['fname'];
+	$lname = $_POST['lname'];
+	$idnumber = $_POST['idnumber'];
+	$gender = $_POST['gender'];
+	$email = $_POST['email'];
+	$tel = $_POST['tel'];
+	$massage = $_POST['massage'];
 
 
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="fname" placeholder="First Name" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="lname" placeholder="Last Name"required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="idnumber" placeholder="Passport/ID Number" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                 <p style="color: white">Please select your gender:</p>
-                                                  <input type="radio" id="male" name="gender" value="male">
-                                                  <label for="male" style="color: white">Male</label><br>
-                                                  <input type="radio" id="female" name="gender" value="female">
-                                                  <label for="male" style="color: white">Female</label><br>
-                                            </div>
-                                        </div>
+$qry = mysqli_query ($con, "INSERT INTO request (service, salutation, fname, lname, idnumber, gender, email, tel, massage, status) VALUES ('$service', '$salutation', '$fname', '$lname', '$idnumber', '$gender', '$email', '$tel', '$massage','Unread')");
+	if($qry){
+		echo "Thank You ".$fname." ".$lname." for Application of ".$service;
+	}
+	else{
+		echo "error";
+	}
 
 
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="tel" class="form-control" name="tel" placeholder="Your Phone No."required>
-                                            </div>
-                                        </div>
+}
+else{
+	echo "error dope";
+}
 
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <textarea type="text" class="form-control" name="massage" cols="30" rows="10" placeholder="Your Request Indicating when you need the Service"required></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn credit-btn mt-30" type="submit" name="submit">Send Application</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><br><br>
-    </section>
-    <!-- ##### Contact Area End ##### -->
+
+  ?>
+       
 
     
     <!-- ##### Footer Area Start ##### -->
