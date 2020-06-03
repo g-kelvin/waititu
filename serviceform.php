@@ -170,6 +170,7 @@
 <?php
 $con= mysqli_connect("localhost","root", "","profwaititu");
 if($con){
+    if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
 	$service = $_POST['service'];
 	$salutation = $_POST['salutation'];
 	$fname = $_POST['fname'];
@@ -188,6 +189,9 @@ $qry = mysqli_query ($con, "INSERT INTO request (service, salutation, fname, lna
 	else{
 		echo "error";
 	}
+
+}
+
 
 
 }
