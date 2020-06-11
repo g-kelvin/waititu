@@ -216,7 +216,7 @@
                     $tid = $row['tid'];                
                 echo "(" .$rowcount.")"."<strong style='color: red'> New Messages <br> </strong>";
                 echo "<strong style='color: red'>Status: </strong>".$row['status']."<br>";
-                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br><br>"."<a href='readmessage.php?tid=$tid'><button style=\"background-color: green\" ><b>Click To Mark as Read<b></button></a>"."<hr>"."<br>";
+                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Client Age is: ".$row['age']."<br>"."From: ".$row['town']." , ".$row['estate']."<br>"."Request Message: <br>".$row['massage']."<br><br>"."<a href='readmessage.php?tid=$tid'><button style=\"background-color: green\" ><b>Click To Mark as Read<b></button></a>"."<hr>"."<br>";
                 
                     
               
