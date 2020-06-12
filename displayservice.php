@@ -476,6 +476,28 @@
                                     $x= date('Y-m-d  H:i:s'); 
                                     echo $x; 
 
+                                    $con= mysqli_connect("localhost", "root", "","profwaititu");
+                                    if($con){
+                                        $qry= "SELECT * FROM servicep ORDER BY tid DESC  LIMIT 10";
+                                        echo "<h3>Service Providers</H3> <br>";
+                                        $result= mysqli_query($con,$qry);
+                                        if(mysqli_num_rows($result)>0) {
+                                             while($row = mysqli_fetch_assoc($result)){
+                                                $rowcount=mysqli_num_rows($result);
+                                                echo "(" .$rowcount.")"."<strong style='color: red'> Registered Service Providers <br> </strong>";
+                                                echo "Name: ".$row['fname']." ".$row['lname']." ".$row['oname']. "<br>" . "My Age: ".$row['age']." <br>". "ID/ Passport Number: ".$row['idnumber']."<br>"."Gender: ".$row['gender']."<br>". "Email: ".$row['email']."<br>"."From: ".$row['town']. ", ".$row['estate']."<br>"."My Phone Number is: ".$row['tel']."<br>"."Level of Educatio: ".$row['education']. "<br>". "Course: ".$row['course']."<br>"."Grade: ".$row['grade']."<br>". "My Profession: ".$row['prof'],"<br>"."My Address: ".$row['address']."<br>"."My Experience: ".$row['message']."<br><hr>";
+                                             }
+
+                                        }
+                                        else
+                                        {
+                                            echo "There Are NO Service Providers";
+                                        }
+                                    }
+                                    else{
+                                        echo "Error in Connection";
+                                    }
+
                                     ?>
 
                     </div>

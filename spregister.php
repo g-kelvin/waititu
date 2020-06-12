@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -78,6 +78,15 @@
                                 <ul>
                                     <li><a href="index.html">Home</a></li>
                                     <li><a href="about.html">About Us</a></li>
+                                    <li><a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="about.html">About Us</a></li>
+                                            <li><a href="services.html">Services</a></li>
+                                            <li><a href="post.html">Post</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
+                                        </ul>
+                                    </li>
                                     <li><a href="services.html">Services</a></li>
                                     <li><a href="#">Portfolio</a>
                                         <div class="megamenu">
@@ -120,12 +129,6 @@
                                         </div>
                                     </li>
                                     <li><a href="post.html">Blog</a></li>
-                                    <li><a href="#">Sign Up</a>
-                                        <ul class="dropdown">
-                                            <li><a href="spregister.html">Register</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                        </ul>
-                                    </li>
                                     <li><a href="contact.html">Contact</a></li>
                                 </ul>
                             </div>
@@ -149,169 +152,58 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="breadcrumb-content">
-                        <h2>Service Provider Registration</h2>
+                        <h2>Client Portal</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Register</li>
+                                <li class="breadcrumb-item active" aria-current="page">Request Service Portal</li>
                             </ol>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-    </section><br><br><br><br><br><br><br><br><br>
+    </section><br><br>
     <!-- ##### Breadcrumb Area End ##### -->
 
     
+<?php
+    $con = mysqli_connect("localhost", "root", "","profwaititu");
+    if($con){
+        if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        $fname=$_POST['fname'];
+        $lname=$_POST['lname'];
+        $oname=$_POST['oname'];
+        $age=$_POST['age'];
+        $idnumber=$_POST['idnumber'];
+        $gender=$_POST['gender'];
+        $email=$_POST['email'];
+        $town=$_POST['town'];
+        $estate=$_POST['estate'];
+        $tel=$_POST['tel'];
+        $education=$_POST['education'];
+        $course=$_POST['course'];
+        $grade=$_POST['grade'];
+        $prof=$_POST['prof'];
+        $address=$_POST['address'];
+        $pass=$_POST['pass'];
+        $message=$_POST['message'];
 
-        <!-- ##### Google Maps ##### -->
-        <div class="map-area">
-            
-            <!-- Contact Area -->
-            <div class="contact---area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-lg-10">
-                            <!-- Contact Area -->
-                            <div class="contact-form-area contact-page">
-                                <h4 class="mb-50">Register Your Profile</h4>
-                                <div style="color: white"> <li>Kindly fill all the field keenly and correctly</li><br>
-                                <li>All fields are mandatory *</li><br>
-                                <li>Once you are satisfied with your filling, submit the form</li> </div><br>
+        $qry = mysqli_query ($con, "INSERT INTO servicep (fname, lname, oname, age, idnumber, gender, email, town, estate, tel, education, course, grade, prof, address, pass, message) VALUES ('$fname', '$lname', '$oname', '$age', '$idnumber', '$gender', '$email', '$town', '$estate', '$tel', '$education', '$course', '$grade', '$prof', '$address', '$pass', '$message')");
+        if($qry){
+        echo "Thank You ".$fname." ".$lname." for Registering  with us";
+    }
+    else{
+        echo "error";
+    }
+}
 
-                                <form action="spregister.php" method="post">
-                                    <div class="row">
+    }
+    else{
+        echo "Error in Connection";
+    }
 
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="fname" placeholder="First Name" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="lname" placeholder="Last Name"required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="oname" placeholder="Other Name"required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" name="age" placeholder="Your Age"required>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="idnumber" placeholder="Passport/ID Number" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                 <p style="color: white">Please select your gender:</p>
-                                                  <input type="radio" id="male" name="gender" value="male">
-                                                  <label for="male" style="color: white">Male</label><br>
-                                                  <input type="radio" id="female" name="gender" value="female">
-                                                  <label for="male" style="color: white">Female</label><br>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="email" class="form-control" name="email" placeholder="Your Email" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="town" placeholder="Your Town" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="estate" placeholder="Your Estate" required>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="tel" class="form-control" name="tel" placeholder="Your Phone No."required>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="education" style="color: white">Which is your highest Education level ?</label>
-                                          <select name="education" type ="text">
-                                            <option>---Select a Service---</option>
-                                            <option value="Service 1">University</option>
-                                            <option value="Service 2">College</option>
-                                            <option value="Service 3">High School</option>
-                                            <option value="Service 4">Primary School</option>
-                                          </select>
-                                            </div>
-                                        </div>
-
-                                         <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="course" placeholder="Course Studied ?."required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="grade" placeholder="Grade Attained  School?"required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="prof" placeholder="Your profession/specialization?"required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="address" placeholder="Your Address"required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="password" class="form-control" name="pass" placeholder="Your profession/specialization?"required>
-                                            </div>
-                                        </div>
-
-
-
-
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <textarea type="text" class="form-control" name="message" cols="30" rows="10" placeholder="Tell us your work experience."required></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <button class="btn credit-btn mt-30" type="submit" name="submit">Send Application</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><br><br><br><br><br><br><br><br><br>
-    </section>
-    <!-- ##### Contact Area End ##### -->
+  ?>
 
     
     <!-- ##### Footer Area Start ##### -->
