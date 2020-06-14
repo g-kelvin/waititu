@@ -197,35 +197,82 @@
                     <div class="accordions mb-100" id="accordion" role="tablist" aria-multiselectable="true">
                         <!-- single accordian area -->
                         <div class="panel single-accordion">
-                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">UNASSIGNED REQUESTS
+                            <h6><a role="button" class="" aria-expanded="true" aria-controls="collapseOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Service One
                                     <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                     <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                     </a></h6>
                             <div id="collapseOne" class="accordion-content collapse show">
-                                <?php 
+                                           <?php 
     $con=mysqli_connect("localhost",'root',"","profwaititu");
     if($con){
-       
-        $qry= "SELECT * FROM request WHERE status='Unread' ORDER BY tid DESC  LIMIT 10";
-        echo "<h3> NEW SERVICE REQUEST</H3> <br>";
+        $qry= "SELECT * FROM request WHERE service='service 1'";
+        $fromQuery = $toQuery = null;
+        if (isset($_GET['from'])) {
+            $from = $_GET['from'];
+            $qry = $qry . " AND DATE(date_requested) >= '$from'";
+        }
+        if (isset($_GET['to'])) {
+            $to = $_GET['to'];
+            $qry = $qry . " AND DATE(date_requested) <= '$to' ";
+        }
+
+        $qry = $qry . " ORDER BY tid DESC  LIMIT 10";
+        
+        echo "<h3>READ MESSAGES</H3> <br>";
+        $today = date("Y-m-d");
+        ?>
+        <form class="row" method="get" action="">
+            <input type="date" name="from" class="form-control col-sm-3 offset-sm-1" placeholder="From" required />
+            <input type="date" name="to" class="form-control col-sm-3 offset-sm-1" placeholder="To" value="<?php echo $today; ?>" max="<?php echo $today; ?>" required />
+            <button class="btn btn-sm btn-info col-sm-2 offset-sm-1">Filter</button>
+        </form>
+        <hr />
+        <?php
         $result= mysqli_query($con,$qry);
         if(mysqli_num_rows($result)>0){
-            while($row = mysqli_fetch_array($result)){
+            while($row = mysqli_fetch_assoc($result)){
                 $rowcount=mysqli_num_rows($result);
-                
-                    $tid = $row['tid'];                
-                echo "(" .$rowcount.")"."<strong style='color: red'> New Messages <br> </strong>";
+                echo "(" .$rowcount.")"."<strong style='color: red'> Read Messages <br> </strong>";
                 echo "<strong style='color: red'>Status: </strong>".$row['status']."<br>";
-                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Client Age is: ".$row['age']."<br>"."From: ".$row['town']." , ".$row['estate']."<br>"."Request Message: <br>".$row['massage']."<br><br>"."<a href='readmessage.php?tid=$tid'><button style=\"background-color: green\" ><b>Click To Mark as Read<b></button></a>"."<hr>"."<br>";
-                
-                    
-              
+                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<hr>";
+
+            }
+            $result_per_page=2;
+            // total number of pages available
+            $number_of_pages= ceil($rowcount/$result_per_page) ;
+
+            // determine which number visitor is currently one
+            if(!isset($_GET['page'])){
+                $page=1;
+                 }
+                else
+                {
+                    $page =$_GET['page'];
+                }
+           
+
+            // determine the sql limit starting number for the result on the displaying  page
+            $this_page_first_result=($page-1)*$result_per_page;
 
 
+            // retrive selected results from database and display them on page
+
+         $sql="SELECT * FROM request WHERE service='service 1' LIMIT  ".$this_page_first_result.','.$result_per_page;
+         $result = mysqli_query ($con,$sql);
+          while($row = mysqli_fetch_assoc($result)){
+                $rowcount=mysqli_num_rows($result);
+                echo "(" .$rowcount.")"."<strong style='color: red'> Read Messages <br> </strong>";
+                echo "<strong style='color: red'>Status: </strong>".$row['status']."<br>";
+                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<hr>";
+
+            }
+            // display the link to the page
+            for ($page=0; $page <=$number_of_pages ; $page++) { 
+                echo '<a href=" try.php?page='.$page.'" >'.$page."</a>";
             }
         }
         else{
-            echo "You Have no new message";
+            echo "nothing in table";
         }
     }
     else{
@@ -235,10 +282,13 @@
  ?>
                             </div>
                         </div>
-                        <!-- single accordian area -->
+
+                        <!-- service one ends -->
+
+                        <!-- Service Two Start -->
                         <div class="panel single-accordion">
                             <h6 >
-                                <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">DONE SERVICES
+                                <a role="button" class="collapsed" aria-expanded="true" aria-controls="collapseTwo" data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">Services Two
                                         <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                         <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                         </a>
@@ -247,7 +297,7 @@
                                  <?php 
     $con=mysqli_connect("localhost",'root',"","profwaititu");
     if($con){
-        $qry= "SELECT * FROM request WHERE status='READ' ";
+        $qry= "SELECT * FROM request WHERE service='service 2' ";
         $fromQuery = $toQuery = null;
         if (isset($_GET['from'])) {
             $from = $_GET['from'];
@@ -291,198 +341,66 @@
  ?>
                             </div>
                         </div>
-                        <!-- single accordian area -->
+                        <!-- service one end -->
+
+
+                        <!-- service two start -->
                         <div class="panel single-accordion">
                             <h6>
-                                <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">REPORTS
+                                <a role="button" aria-expanded="true" aria-controls="collapseThree" class="collapsed" data-parent="#accordion" data-toggle="collapse" href="#collapseThree">Service Three
                                         <span class="accor-open"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                         <span class="accor-close"><i class="fa fa-minus" aria-hidden="true"></i></span>
                                     </a>
                             </h6>
                             <div id="collapseThree" class="accordion-content collapse">
-                                <p><div class="row">
-  <div class="column" style="background-color:#aaa;">
-    <b style="color: brown">Services Requested <br><br></b>
-    <?php
-        $con=mysqli_connect("localhost",'root',"","profwaititu");
-        if($con){
-            $qry="SELECT service FROM request where service ='service 1'";
-            $result= mysqli_query($con,$qry);
-            if(mysqli_num_rows($result)>0){
-    
-                    $rowcount=mysqli_num_rows($result);
-                    echo " <b>Service 1,</b> Has Been Requested <br>".$rowcount." Times <hr>";
+                                     <?php 
+    $con=mysqli_connect("localhost",'root',"","profwaititu");
+    if($con){
+        $qry= "SELECT * FROM request WHERE service='service 3' ";
+        $fromQuery = $toQuery = null;
+        if (isset($_GET['from'])) {
+            $from = $_GET['from'];
+            $qry = $qry . " AND DATE(date_requested) >= '$from'";
+        }
+        if (isset($_GET['to'])) {
+            $to = $_GET['to'];
+            $qry = $qry . " AND DATE(date_requested) <= '$to' ";
+        }
+
+        $qry = $qry . " ORDER BY tid DESC  LIMIT 10";
+        
+        echo "<h3>READ MESSAGES</H3> <br>";
+        $today = date("Y-m-d");
+        ?>
+        <form class="row" method="get" action="">
+            <input type="date" name="from" class="form-control col-sm-3 offset-sm-1" placeholder="From" required />
+            <input type="date" name="to" class="form-control col-sm-3 offset-sm-1" placeholder="To" value="<?php echo $today; ?>" max="<?php echo $today; ?>" required />
+            <button class="btn btn-sm btn-info col-sm-2 offset-sm-1">Filter</button>
+        </form>
+        <hr />
+        <?php
+        $result= mysqli_query($con,$qry);
+        if(mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)){
+                $rowcount=mysqli_num_rows($result);
+                echo "(" .$rowcount.")"."<strong style='color: red'> Read Messages <br> </strong>";
+                echo "<strong style='color: red'>Status: </strong>".$row['status']."<br>";
+                echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<hr>";
 
 
-
-              
-                
             }
-            else{
-                echo "The Service has not been offered to any client";
-            }
+
         }
         else{
-            echo "Error in connection";
+            echo "nothing in table";
         }
+    }
+    else{
+        echo "error";
+    }
 
-        // Start of second service
-         $con=mysqli_connect("localhost",'root',"","profwaititu");
-        if($con){
-            $qry="SELECT service FROM request where service ='service 2'";
-            $result= mysqli_query($con,$qry);
-            if(mysqli_num_rows($result)>0){
-    
-                    $rowcount=mysqli_num_rows($result);
-                    echo "<br> <b>Service 2,</b> Has Been Requested <br>".$rowcount." Times <hr>";
+ ?>
 
-
-
-              
-                
-            }
-            else{
-                echo "The Service has not been offered to any client";
-            }
-        }
-        else{
-            echo "Error in connection";
-        }
-
-        // Start of service three
-         $con=mysqli_connect("localhost",'root',"","profwaititu");
-        if($con){
-            $qry="SELECT service FROM request where service ='service 3'";
-            $result= mysqli_query($con,$qry);
-            if(mysqli_num_rows($result)>0){
-    
-                    $rowcount=mysqli_num_rows($result);
-                    echo "<br> <b>Service 3,</b> Has Been Requested <br>".$rowcount." Times <hr>";
-
-
-
-              
-                
-            }
-            else{
-                echo "The Service has not been offered to any client";
-            }
-        }
-        else{
-            echo "Error in connection";
-        }
-
-        // Start Service 4
-         $con=mysqli_connect("localhost",'root',"","profwaititu");
-        if($con){
-            $qry="SELECT service FROM request where service ='service 4'";
-            $result= mysqli_query($con,$qry);
-            if(mysqli_num_rows($result)>0){
-    
-                    $rowcount=mysqli_num_rows($result);
-                    echo "<br> <b>Service 4,</b> Has Been Requested <br>".$rowcount." Times <hr>";
-
-
-
-              
-                
-            }
-            else{
-                echo "The Service has not been offered to any client";
-            }
-        }
-        else{
-            echo "Error in connection";
-        }
-
-
-          ?> 
-  </div>
-  <div class="column" style="background-color:#bbb;">
-    <b style="color: brown">Men & Women <br></b>
-    <?php
-         // men report
-         $con=mysqli_connect("localhost",'root',"","profwaititu");
-        if($con){
-            $qry="SELECT gender FROM request where gender ='male'";
-            $result= mysqli_query($con,$qry);
-            if(mysqli_num_rows($result)>0){
-    
-                    $rowcount=mysqli_num_rows($result);
-                    echo "The Number of Men Who Has Requested Service is:  <br>".$rowcount."<hr>";
-
-
-
-              
-                
-            }
-            else{
-                echo "The Service has not been offered to any client";
-            }
-        }
-        else{
-            echo "Error in connection";
-        }
-
-
-        // women report
-         $con=mysqli_connect("localhost",'root',"","profwaititu");
-        if($con){
-            $qry="SELECT gender FROM request where gender ='female'";
-            $result= mysqli_query($con,$qry);
-            if(mysqli_num_rows($result)>0){
-    
-                    $rowcount=mysqli_num_rows($result);
-                    echo "The Number of Female Who Has Requested Service is:  <br>".$rowcount."<hr>";
-
-
-
-              
-                
-            }
-            else{
-                echo "The Service has not been offered to any client";
-            }
-        }
-        else{
-            echo "Error in connection";
-        }
-
-
-  
-
-    ?>
-  </div>
-  <div class="column" style="background-color:#ccc;">
-    <d>Total Request</d>
-    <?php
-    // men report
-         $con=mysqli_connect("localhost",'root',"","profwaititu");
-        if($con){
-            $qry="SELECT * FROM request ";
-            $result= mysqli_query($con,$qry);
-            if(mysqli_num_rows($result)>0){
-    
-                    $rowcount=mysqli_num_rows($result);
-                    echo "The Total Number of Service Requested is:  <br>".$rowcount."<hr>";
-
-
-
-              
-                
-            }
-            else{
-                echo "The Service has not been offered to any client";
-            }
-        }
-        else{
-            echo "Error in connection";
-        }
-
-
-      ?>
-  </div>
-</div></p>
                             </div>
                         </div>
                     </div>
