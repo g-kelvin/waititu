@@ -5,13 +5,12 @@
         $email = $_POST['email'];
         $pass = $_POST['pass'] ;    
         echo $pass;
-        $qry="SELECT email, pass FROM clientregister WHERE email='$email' AND pass='$pass'";
-        $qry="SELECT service FROM request where service ='service 2'";
+        $qry="SELECT email, pass FROM users WHERE email='$email' AND pass='$pass'";
             $result= mysqli_query($con,$qry);
             if(mysqli_num_rows($result)>0){
             
                         echo "congratulation , login successful <br>";
-                        header('refresh:0.0000001;url=displayservice.php');
+                        header('refresh:0.0000001;url=paybill.html');
                         
         }
             else{
