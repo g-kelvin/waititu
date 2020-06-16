@@ -248,7 +248,12 @@
     $con=mysqli_connect("localhost",'root',"","profwaititu");
     if($con){
         $qry= "SELECT * FROM request WHERE status='READ' ";
+        $startLimit = 0;
         $fromQuery = $toQuery = null;
+        if (isset($_GET['page'])) {
+            $page = (int)$_GET['page'];
+            $startLimit = ($page - 1) * 10;
+        }
         if (isset($_GET['from'])) {
             $from = $_GET['from'];
             $qry = $qry . " AND DATE(date_requested) >= '$from'";
@@ -257,15 +262,27 @@
             $to = $_GET['to'];
             $qry = $qry . " AND DATE(date_requested) <= '$to' ";
         }
+        $stopLimit = $startLimit + 10;
 
-        $qry = $qry . " ORDER BY tid DESC  LIMIT 10";
+        $qry = $qry . " ORDER BY tid DESC  LIMIT $startLimit, $stopLimit";
+        $qryCount = "SELECT * FROM request where status='READ' LIMIT $startLimit, $stopLimit";
+        $x = mysqli_query($con, $qryCount);
+        $totalMessages = mysqli_num_rows($x);
+        $pages = $totalMessages/10; 
+        $pages = (int)$pages + 1;     
+        // echo $totalCount;
+
         
         echo "<h3>READ MESSAGES</H3> <br>";
         $today = date("Y-m-d");
+        $from  = '';
+        $to = $today;
+        if (isset($_GET['from'])) $from = $_GET['from'];
+        if (isset($_GET['to'])) $to = $_GET['to'];
         ?>
         <form class="row" method="get" action="">
-            <input type="date" name="from" class="form-control col-sm-3 offset-sm-1" placeholder="From" required />
-            <input type="date" name="to" class="form-control col-sm-3 offset-sm-1" placeholder="To" value="<?php echo $today; ?>" max="<?php echo $today; ?>" required />
+            <input type="date" name="from" class="form-control col-sm-3 offset-sm-1" placeholder="From" value="<?php echo $from; ?>" required />
+            <input type="date" name="to" class="form-control col-sm-3 offset-sm-1" placeholder="To" value="<?php echo $to; ?>" max="<?php echo $today; ?>" required />
             <button class="btn btn-sm btn-info col-sm-2 offset-sm-1">Filter</button>
         </form>
         <hr />
@@ -277,8 +294,20 @@
                 echo "(" .$rowcount.")"."<strong style='color: red'> Read Messages <br> </strong>";
                 echo "<strong style='color: red'>Status: </strong>".$row['status']."<br>";
                 echo"Client Name: ". $row['salutation']." ".$row['fname'] ." ".$row['lname']."<br>"." Servies Requested: ". $row['service']."<br>"."Phone Number: ".$row['tel']."<br>"."Email: ".$row['email']."<br>"."Request Message: <br>".$row['massage']."<br>"."<hr>";
-
             }
+            echo "<hr />";
+            ?>
+
+                <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                <?php
+                for ($i = 1; $i <= $pages; $i++) 
+                    echo "<li class='page-item active'><a class='page-link' href='?page=$i'>$i</a></li>";
+                ?>
+                </ul>
+                </nav>
+
+            <?php
         }
         else{
             echo "nothing in table";
@@ -306,16 +335,15 @@
     <?php
         $con=mysqli_connect("localhost",'root',"","profwaititu");
         if($con){
-            $qry="SELECT service FROM request where service ='service 1'";
+
+           
+
+            $qry="SELECT service FROM request where service ='service 1' LIMIT $startPoint, $stopPoint";
             $result= mysqli_query($con,$qry);
             if(mysqli_num_rows($result)>0){
     
                     $rowcount=mysqli_num_rows($result);
                     echo " <b>Service 1,</b> Has Been Requested <br>".$rowcount." Times <hr>";
-
-
-
-              
                 
             }
             else{
@@ -335,10 +363,6 @@
     
                     $rowcount=mysqli_num_rows($result);
                     echo "<br> <b>Service 2,</b> Has Been Requested <br>".$rowcount." Times <hr>";
-
-
-
-              
                 
             }
             else{
@@ -358,10 +382,6 @@
     
                     $rowcount=mysqli_num_rows($result);
                     echo "<br> <b>Service 3,</b> Has Been Requested <br>".$rowcount." Times <hr>";
-
-
-
-              
                 
             }
             else{
@@ -381,10 +401,6 @@
     
                     $rowcount=mysqli_num_rows($result);
                     echo "<br> <b>Service 4,</b> Has Been Requested <br>".$rowcount." Times <hr>";
-
-
-
-              
                 
             }
             else{
@@ -410,10 +426,6 @@
     
                     $rowcount=mysqli_num_rows($result);
                     echo "The Number of Men Who Has Requested Service is:  <br>".$rowcount."<hr>";
-
-
-
-              
                 
             }
             else{
@@ -465,10 +477,6 @@
     
                     $rowcount=mysqli_num_rows($result);
                     echo "The Total Number of Service Requested is:  <br>".$rowcount."<hr>";
-
-
-
-              
                 
             }
             else{
@@ -499,7 +507,26 @@
 
                                     $con= mysqli_connect("localhost", "root", "","profwaititu");
                                     if($con){
-                                        $qry= "SELECT * FROM servicep ORDER BY tid DESC  LIMIT 10";
+
+                                        $servicePage = 1;
+                                        if (isset($_GET['servicePage'])) {
+                                            $servicePage = $_GET['servicePage'];
+                                        }
+                                        $servicePage = (int)$servicePage;
+                                        $startPoint = ($servicePage - 1) * 10;
+                                        $stopPoint = $startPoint + 10;
+                            
+                                        $totalMessages = mysqli_num_rows($x);
+                                        $pages = $totalMessages/10; 
+                                        $pages = (int)$pages + 1; 
+                            
+                                        $servicePagesCount = mysqli_num_rows(mysqli_query($con, "SELECT * FROM servicep"));
+                                        $pages = $servicePagesCount/10;
+                                        $pages = (int)$pages + 1;
+
+                                        //
+
+                                        $qry= "SELECT * FROM servicep ORDER BY tid DESC  LIMIT $startLimit, $stopPoint";
                                         echo "<h3>Service Providers</H3> <br>";
                                         $result= mysqli_query($con,$qry);
                                         if(mysqli_num_rows($result)>0) {
@@ -508,6 +535,20 @@
                                                 echo "(" .$rowcount.")"."<strong style='color: red'> Registered Service Providers <br> </strong>";
                                                 echo "Name: ".$row['fname']." ".$row['lname']." ".$row['oname']. "<br>" . "My Age: ".$row['age']." <br>". "ID/ Passport Number: ".$row['idnumber']."<br>"."Gender: ".$row['gender']."<br>". "Email: ".$row['email']."<br>"."From: ".$row['town']. ", ".$row['estate']."<br>"."My Phone Number is: ".$row['tel']."<br>"."Level of Educatio: ".$row['education']. "<br>". "Course: ".$row['course']."<br>"."Grade: ".$row['grade']."<br>". "My Profession: ".$row['prof'],"<br>"."My Address: ".$row['address']."<br>"."My Experience: ".$row['message']."<br><hr>";
                                              }
+
+                                             ?>
+
+                                            <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                            <?php
+                                            for ($i = 1; $i <= $pages; $i++) {
+                                                echo "<li class='page-item active'><a class='page-link' href='?servicePage=$i'>$i</a></li>";
+                                            }
+                                            ?>
+                                            </ul>
+                                            </nav>
+
+                                        <?php
 
                                         }
                                         else
