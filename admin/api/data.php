@@ -2,7 +2,8 @@
 
 include "api.php";
 
-function fetchServiceProviders() {
+function fetchServiceProviders()
+{
     $conn = dbConnect();
     $qry = "SELECT * FROM servicep ORDER BY fname ASC";
     $res = mysqli_query($conn, $qry);
@@ -13,7 +14,8 @@ function fetchServiceProviders() {
     return $data;
 }
 
-function fetchServiceProvider($id) {
+function fetchServiceProvider($id)
+{
     $query = "SELECT * FROM servicep WHERE tid='$id'";
     $conn = dbConnect();
 
@@ -21,15 +23,27 @@ function fetchServiceProvider($id) {
     return mysqli_fetch_assoc($res);
 }
 
-function fetchRequests() {
-   $conn = dbConnect();
+function fetchRequests()
+{
+    $conn = dbConnect();
 
-   $qry = "select r.tid as request_id, r.service, r.fname, r.lname, r.massage, r.town, r.estate, r.status, r.date_requested
-from request r ORDER BY IF (r.status = 'Active', 0, 1), r.status DESC, r.date_requested DESC;";
-   $res = mysqli_query($conn, $qry);
-   $data = array();
-   while ($row = mysqli_fetch_assoc($res)) {
+    $qry = "select r.tid as request_id, r.service, r.fname, r.lname, r.massage, r.town, r.estate, r.status, r.date_requested
+            from request r ORDER BY IF (r.status = 'Active', 0, 1), r.status DESC, r.date_requested DESC;";
+    $res = mysqli_query($conn, $qry);
+    $data = array();
+    while ($row = mysqli_fetch_assoc($res)) {
+        $id = $row['request_id'];
+        $q = "select concat(s.fname, ' ', s.lname) as service_provider 
+                from request_servicep rs inner join servicep s on rs.servicep_id = s.tid
+                where rs.request_id = $id
+                limit 1;";
+       $r = mysqli_query($conn, $q);
+       if (mysqli_num_rows($res) == 0) {
+           $row['service_provider'] = '';
+       } else {
+           $row['service_provider'] = mysqli_fetch_assoc($r)['service_provider'];
+       }
        array_push($data, $row);
    }
-   return $data;
+    return $data;
 }

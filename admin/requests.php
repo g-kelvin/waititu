@@ -183,6 +183,7 @@ $requests = fetchRequests();
                         <th>#</th>
                         <th>Service</th>
                         <th>Customer Name</th>
+                        <th>Service Provider</th>
                         <th>Message</th>
                         <th>Town</th>
                         <th>Estate</th>
@@ -211,6 +212,7 @@ $requests = fetchRequests();
                         <td>$no</td>
                         <td>" . $r['service'] . "</td>
                         <td>" . $r['fname'] . " " . $r['lname'] . "</td>
+                        <td>". $r['service_provider'] ."</td>
                         <td>" . $r['massage'] . "</td>
                         <td>" . $r['town'] . "</td>
                         <td>" . $r['estate'] . "</td>
