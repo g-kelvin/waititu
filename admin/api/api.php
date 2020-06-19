@@ -1,7 +1,5 @@
 <?php
 session_start();
-include_once "config.php";
-
 
 function dbConnect () {
     $conn = mysqli_connect("localhost", "root", "", "profwaititu");
