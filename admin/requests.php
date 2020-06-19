@@ -202,7 +202,7 @@ $requests = fetchRequests();
                             $btn = "<a class='btn btn-success btn-sm' href='/admin/assign.php?id=". $r['request_id'] . "'>Assign</a>";
                         } elseif ($r['status'] == 'Active') {
                             $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=". $r['request_id'] . "&servicep=". $r[''] ."'>Finish</a>";
+                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=". $r['request_id'] ."'>Finish</a>";
                         }
                         elseif ($r['status'] == 'Done') {
                             $class = 'table-success';

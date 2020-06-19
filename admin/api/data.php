@@ -37,13 +37,17 @@ function fetchRequests()
                 from request_servicep rs inner join servicep s on rs.servicep_id = s.tid
                 where rs.request_id = $id
                 limit 1;";
-       $r = mysqli_query($conn, $q);
-       if (mysqli_num_rows($res) == 0) {
-           $row['service_provider'] = '';
-       } else {
-           $row['service_provider'] = mysqli_fetch_assoc($r)['service_provider'];
-       }
-       array_push($data, $row);
-   }
+        $r = mysqli_query($conn, $q);
+        if ($r) {
+            $d = mysqli_fetch_assoc($r);
+            if (isset($d)) {
+                $row['service_provider'] = $d['service_provider'];
+            } else{
+                $row['service_provider'] = '';
+            }
+        }
+
+        array_push($data, $row);
+    }
     return $data;
 }
