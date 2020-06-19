@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>
-    Mechwangu | Login
+     | Login
   </title>
   <link href="/components/dummy-assets/common/img/favicon.png" rel="shortcut icon">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i" rel="stylesheet">
@@ -138,7 +138,7 @@
         <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
         
           <span class="font-size-18 d-block">
-            <span class="text-muted"><strong>Mechwangu</strong></span>
+            <span class="text-muted"><strong></strong></span>
            
           </span>
         </nav>
