@@ -27,11 +27,11 @@ function handleLogin($data) {
     if (mysqli_num_rows($res) > 0) {
         $data = mysqli_fetch_assoc($res);
         $_SESSION['user_id'] = $data['tid'];
-        redirect("admin");
+        redirect("../");
     } else {
         $_SESSION['flash_message'] = 'Wrong credentials';
         $_SESSION['flash_message_class'] = 'danger';
-        redirect('/admin/auth/login.php');
+        redirect('../auth/login.php');
         echo "Failed";
     }
 }

@@ -16,7 +16,7 @@ function checkLogin()
     if (!$isLoggedIn) {
         $_SESSION['flash_message'] = "You need to login";
         $_SESSION['flash_message_class'] = "danger";
-        redirect("admin/auth/login.php");
+        redirect("./auth/login.php");
     }
 }
 
@@ -43,9 +43,8 @@ function logger($log_msg)
 
 function redirect($endpoint, $permanent = false)
 {
-    $url = "/" . $endpoint;
     if (headers_sent() === false) {
-        header('Location: ' . $url, true, ($permanent === true) ? 301 : 302);
+        header('Location: ' . $endpoint, true, ($permanent === true) ? 301 : 302);
     }
 }
 

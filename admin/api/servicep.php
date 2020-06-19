@@ -42,7 +42,7 @@ grade='$grade', prof='$prof', address='$address', pass='$pass', message='$messag
         $_SESSION['flash_message'] = 'Unable to update service provider';
         $_SESSION['flash_message_class'] = 'danger';
     }
-    redirect("admin");
+    redirect("../");
 
 }
 
@@ -75,5 +75,5 @@ grade='$grade', prof='$prof', address='$address', pass='$pass', message='$messag
         $_SESSION['flash_message'] = 'Unable to add service provider';
         $_SESSION['flash_message_class'] = 'danger';
         }
-    redirect("admin");
+    redirect("../");
 }

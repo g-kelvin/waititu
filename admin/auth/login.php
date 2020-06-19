@@ -178,7 +178,7 @@
                   type="text"
                   data-validation="[EMAIL]"
                   required
-                  value="kelvingauki@gmail.com"
+                  value=""
                 />
               </div>
               <div class="form-group">
@@ -192,7 +192,7 @@
                   data-validation-message="$ must be at least 6 characters"
                   placeholder="Password"
                   required
-                  value="kelvingauki"
+                  value=""
                 />
               </div>
               <div class="form-group">

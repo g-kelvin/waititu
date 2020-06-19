@@ -9,7 +9,7 @@ $qry = "UPDATE request_servicep SET completed=true WHERE request_id=$id";
 $res = mysqli_query($conn, $qry);
 $qry = "UPDATE request SET status='Done' WHERE tid=$id";
 $res = mysqli_query($conn, $qry);
-redirect('admin/requests.php');
+redirect('./requests.php');
 
 ?>
 <!DOCTYPE html>
