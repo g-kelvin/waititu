@@ -19,7 +19,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a0591ce-7af6-40a5-8dd3-0779aca4f782" name="Default Changelist" comment="" />
+    <list default="true" id="8a0591ce-7af6-40a5-8dd3-0779aca4f782" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/admin/delete_provider.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/delete_request.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/logout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/421bc66d-7a4e-48af-91ec-d16221610712.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/421bc66d-7a4e-48af-91ec-d16221610712.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/api/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/api/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/api/data.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/api/data.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/common/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/common/menu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/finish.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/finish.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/requests.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/requests.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +58,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/code/work/betika/betika-web-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -54,7 +66,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager">
     <configuration name="index.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/html/admin/index.php" useBuiltInWebServerPort="true">
@@ -80,6 +92,7 @@
       <workItem from="1592523177356" duration="6162000" />
       <workItem from="1592532659669" duration="1863000" />
       <workItem from="1592549723658" duration="17000" />
+      <workItem from="1592590568536" duration="8297000" />
     </task>
     <servers />
   </component>
@@ -114,33 +127,45 @@
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
     <state x="743" y="280" width="432" height="489" key="FileChooserDialogImpl/0.0.1920.1044@0.0.1920.1044" timestamp="1592549739501" />
-    <state width="1874" height="265" key="GridCell.Tab.0.bottom" timestamp="1592532643447">
+    <state width="1716" height="286" key="GridCell.Tab.0.bottom" timestamp="1592657919518">
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
-    <state width="1874" height="265" key="GridCell.Tab.0.bottom/0.0.1920.1044@0.0.1920.1044" timestamp="1592532643447" />
-    <state width="1874" height="265" key="GridCell.Tab.0.center" timestamp="1592532643446">
+    <state width="1716" height="286" key="GridCell.Tab.0.bottom/0.0.1920.1044@0.0.1920.1044" timestamp="1592657919518" />
+    <state width="1716" height="286" key="GridCell.Tab.0.center" timestamp="1592657919517">
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
-    <state width="1874" height="265" key="GridCell.Tab.0.center/0.0.1920.1044@0.0.1920.1044" timestamp="1592532643446" />
-    <state width="1874" height="265" key="GridCell.Tab.0.left" timestamp="1592532643446">
+    <state width="1716" height="286" key="GridCell.Tab.0.center/0.0.1920.1044@0.0.1920.1044" timestamp="1592657919517" />
+    <state width="1716" height="286" key="GridCell.Tab.0.left" timestamp="1592657919516">
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
-    <state width="1874" height="265" key="GridCell.Tab.0.left/0.0.1920.1044@0.0.1920.1044" timestamp="1592532643446" />
-    <state width="1874" height="265" key="GridCell.Tab.0.right" timestamp="1592532643447">
+    <state width="1716" height="286" key="GridCell.Tab.0.left/0.0.1920.1044@0.0.1920.1044" timestamp="1592657919516" />
+    <state width="1716" height="286" key="GridCell.Tab.0.right" timestamp="1592657919518">
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
-    <state width="1874" height="265" key="GridCell.Tab.0.right/0.0.1920.1044@0.0.1920.1044" timestamp="1592532643447" />
+    <state width="1716" height="286" key="GridCell.Tab.0.right/0.0.1920.1044@0.0.1920.1044" timestamp="1592657919518" />
     <state x="778" y="442" key="NewPhpFileDialog" timestamp="1592519981234">
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
     <state x="778" y="442" key="NewPhpFileDialog/0.0.1920.1044@0.0.1920.1044" timestamp="1592519981234" />
-    <state x="457" y="156" key="SettingsEditor" timestamp="1592522394553">
+    <state x="457" y="156" key="SettingsEditor" timestamp="1592655595293">
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
-    <state x="457" y="156" key="SettingsEditor/0.0.1920.1044@0.0.1920.1044" timestamp="1592522394553" />
+    <state x="457" y="156" key="SettingsEditor/0.0.1920.1044@0.0.1920.1044" timestamp="1592655595293" />
+    <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1592660174882">
+      <screen x="0" y="0" width="1920" height="1044" />
+    </state>
+    <state x="565" y="130" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1044@0.0.1920.1044" timestamp="1592660174882" />
     <state x="664" y="246" width="592" height="554" key="find.popup" timestamp="1592521975877">
       <screen x="0" y="0" width="1920" height="1044" />
     </state>
     <state x="664" y="246" width="592" height="554" key="find.popup/0.0.1920.1044@0.0.1920.1044" timestamp="1592521975877" />
+    <state x="620" y="237" key="run.anything.popup" timestamp="1592658678214">
+      <screen x="0" y="0" width="1920" height="1044" />
+    </state>
+    <state x="620" y="237" key="run.anything.popup/0.0.1920.1044@0.0.1920.1044" timestamp="1592658678214" />
+    <state x="620" y="167" width="672" height="676" key="search.everywhere.popup" timestamp="1592590658243">
+      <screen x="0" y="0" width="1920" height="1044" />
+    </state>
+    <state x="620" y="167" width="672" height="676" key="search.everywhere.popup/0.0.1920.1044@0.0.1920.1044" timestamp="1592590658243" />
   </component>
 </project>

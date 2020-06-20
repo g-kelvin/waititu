@@ -5,7 +5,7 @@ include "api.php";
 function fetchServiceProviders()
 {
     $conn = dbConnect();
-    $qry = "SELECT * FROM servicep ORDER BY fname ASC";
+    $qry = "SELECT * FROM servicep WHERE active=1 ORDER BY fname ASC ";
     $res = mysqli_query($conn, $qry);
     $data = array();
     while ($row = mysqli_fetch_assoc($res)) {
@@ -26,9 +26,18 @@ function fetchServiceProvider($id)
 function fetchRequests()
 {
     $conn = dbConnect();
-
-    $qry = "select r.tid as request_id, r.service, r.fname, r.lname, r.massage, r.town, r.estate, r.status, r.date_requested
+    if ($_SESSION['user_type'] == 'admin') {
+        $qry = "select r.tid as request_id, r.service, r.fname, r.lname, r.massage, r.town, r.estate, r.status, r.date_requested
             from request r ORDER BY IF (r.status = 'Active', 0, 1), r.status DESC, r.date_requested DESC;";
+    } else {
+        $qry = "select r.tid as request_id, r.service, r.fname, r.lname, r.massage, r.town, r.estate, r.status, r.date_requested
+                    from request r INNER JOIN request_servicep rs on r.tid = rs.request_id 
+                    WHERE rs.servicep_id = " . $_SESSION['user_id'] . "
+                    ORDER BY IF (r.status = 'Active', 0, 1), r.status DESC, r.date_requested DESC;";
+    }
+
+
+
     $res = mysqli_query($conn, $qry);
     $data = array();
     while ($row = mysqli_fetch_assoc($res)) {

@@ -9,16 +9,17 @@ if ($_POST) {
     switch ($_POST['request']) {
         case 'login':
             handleLogin($_POST);
-        break;
+            break;
 
         default:
             echo "Goodbye";
-    break;
+            break;
     }
-    
+
 }
 
-function handleLogin($data) {
+function handleLogin($data)
+{
     $conn = dbConnect();
     $email = $data['email_address'];
     $password = $data['password'];
@@ -27,11 +28,25 @@ function handleLogin($data) {
     if (mysqli_num_rows($res) > 0) {
         $data = mysqli_fetch_assoc($res);
         $_SESSION['user_id'] = $data['tid'];
+        $_SESSION['user_type'] = 'admin';
         redirect("../");
+        echo "";
     } else {
-        $_SESSION['flash_message'] = 'Wrong credentials';
-        $_SESSION['flash_message_class'] = 'danger';
-        redirect('../auth/login.php');
-        echo "Failed";
+        $qry = "SELECT tid, email, pass  FROM  servicep  where email = '$email' AND pass='$password' AND active=1";
+
+        $res = mysqli_query($conn, $qry);
+        if (mysqli_num_rows($res) > 0) {
+            $data = mysqli_fetch_assoc($res);
+            $_SESSION['user_id'] = $data['tid'];
+            $_SESSION['user_type'] = 'service_provider';
+            redirect("../requests.php");
+            echo "";
+        } else {
+            echo "NOT found on service provider $qry";
+            $_SESSION['flash_message'] = 'Wrong credentials';
+            $_SESSION['flash_message_class'] = 'danger';
+            redirect('../auth/login.php');
+            echo "";
+        }
     }
 }

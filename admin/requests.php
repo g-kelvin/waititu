@@ -82,6 +82,9 @@ $requests = fetchRequests();
     <script src="/vendors/d3-time-format/dist/d3-time-format.js"></script>
     <script src="/vendors/techan/dist/techan.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.css" id="theme-styles">
+
     <!-- CLEAN UI HTML ADMIN TEMPLATE MODULES-->
     <!-- v2.1.0 -->
     <link rel="stylesheet" type="text/css" href="/components/core/common/core.cleanui.css">
@@ -196,15 +199,20 @@ $requests = fetchRequests();
                     foreach ($requests as $k => $r) {
                         $no = $k + 1;
                         $btn = '';
+                        $btndelete = '';
                         $class = 'table-default';
                         if ($r['status'] == 'Unread') {
                             $class = 'table-warning';
+                            $btndelete = "<button class='btn btn-sm btn-danger' onclick='confirmClick(". $r['request_id'] .")'>Delete</button>";
                             $btn = "<a class='btn btn-success btn-sm' href='/admin/assign.php?id=". $r['request_id'] . "'>Assign</a>";
                         } elseif ($r['status'] == 'Active') {
                             $class = 'table-info';
+                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=". $r['request_id'] ."'>Mark as Done</a>";
+                        } elseif ($r['status'] == 'MarkedDone' && $_SESSION['user_type'] == 'admin' ) {
+                            $class = 'table-info';
                             $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=". $r['request_id'] ."'>Finish</a>";
                         }
-                        elseif ($r['status'] == 'Done') {
+                        elseif ($r['status'] == 'Done' || $r['status'] == 'MarkedDone') {
                             $class = 'table-success';
                         }
                         echo "
@@ -219,7 +227,12 @@ $requests = fetchRequests();
                         <td>" . $r['status'] . "</td>
                         <td>" . $r['date_requested'] . "</td>
                        
-                        <td>$btn</td>
+                        <td>
+                            <div class='btn-group'>
+                            $btn
+                            $btndelete
+                            </div>
+                        </td>
                        </tr>
                        ";
                     }
@@ -232,6 +245,21 @@ $requests = fetchRequests();
 
                 <!-- START: page scripts -->
                 <script>
+                    function confirmClick(id) {
+                        Swal.fire({
+                            title: 'Delete Request',
+                            text: 'This action is not reversible',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, Delete!',
+                        }).then( (result) => {
+                            if (result.value) {
+                                window.location.href = `./delete_request.php?id=${id}`;
+                            }
+                        })
+
+
+                    }
                     ;(function ($) {
                         'use strict'
                         $(function () {

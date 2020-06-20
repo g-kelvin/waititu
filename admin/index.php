@@ -109,6 +109,10 @@ $serviceProviders = fetchServiceProviders();
     <script src="/components/github/common/github.cleanui.js"></script>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.css" id="theme-styles">
+
+
     <!-- PRELOADER STYLES-->
     <style>
         .cui-initial-loading {
@@ -163,6 +167,23 @@ $serviceProviders = fetchServiceProviders();
             <?php include 'common/menu.php' ?>
         </div>
     </nav>
+
+    <script>
+        function confirmClick(id) {
+            Swal.fire({
+                title: 'Delete Service Provider',
+                text: 'This action is not reversible',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Delete!',
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = `./delete_provider.php?id=${id}`;
+                }
+            })
+        }
+
+    </script>
     <div class="cui-layout">
 
         <div class="cui-layout-content">
@@ -212,6 +233,7 @@ $serviceProviders = fetchServiceProviders();
                         <td>" . $s['education'] . "</td>
                         <td>
                         <a href='/admin/view-serviceprovider.php?id=". $s['tid'] ."' class='btn btn-sm btn-info'>Update</a>
+                        <button class='btn btn-sm btn-danger' onclick='confirmClick(". $s['tid'] .")'>Delete</button>
 </td>
                        </tr>
                        ";
@@ -233,7 +255,8 @@ $serviceProviders = fetchServiceProviders();
 
                 <!-- START: page scripts -->
                 <script>
-                    ;(function ($) {
+
+                        ;(function ($) {
                         'use strict'
                         $(function () {
                             $('#example-icons').steps({
