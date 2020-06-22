@@ -3,9 +3,9 @@
 
     if($con){
         $email = $_POST['email'];
-        $pass = $_POST['pass'] ;    
-        echo $pass;
-        $qry="SELECT email, pass FROM users WHERE email='$email' AND pass='$pass'";
+        $password = $_POST['password'] ;    
+
+        $qry="SELECT email, password FROM clientregister WHERE email='$email' AND password='$password'";
             $result= mysqli_query($con,$qry);
             if(mysqli_num_rows($result)>0){
             
