@@ -17,6 +17,8 @@ if ($_SESSION['user_type'] == 'admin') {
 
     $qry = "UPDATE request SET status='MarkedDone' WHERE tid=$id";
     $res = mysqli_query($conn, $qry);
+
+//    aurorae themes
 }
 
 redirect('./requests.php');
