@@ -1,27 +1,23 @@
 <?php
 include 'api/api.php';
 checkLogin();
+$conn = dbConnect();
+
+$qryCustomers = "select tid, concat(fname, ' ' , lname) as name from clientregister order by name";
+$resCustomers = mysqli_query($conn, $qryCustomers);
+$customers = array();
+while ($row = mysqli_fetch_assoc($resCustomers)) {
+    array_push($customers, $row);
+}
 
 if (isset($_POST['service'])) {
     $service = $_POST['service'];
     $salutation = $_POST['salutation'];
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $idnumber = $_POST['idnumber'];
-    $gender = $_POST['gender'];
-    $email = $_POST['email'];
-    $tel = $_POST['tel'];
     $message = $_POST['message'];
     $status = 'Unread';
-    $town = $_POST['town'];
-    $estate = $_POST['estate'];
-    $oname = $_POST['oname'];
-    $age = $_POST['age'];
+    $customer = $_POST['customer'];
 
-    $conn = dbConnect();
-    $qry = "INSERT INTO request SET service='$service', salutation='$salutation', fname='$fname', lname='$lname', 
-idnumber='$idnumber', gender='$gender', email='$email', tel='$tel', massage='$message', status='$status', town='$town', 
-estate = '$estate', oname='$oname', age='$age'";
+    $qry = "INSERT INTO request SET service='$service', salutation='$salutation', massage='$message', status='$status', customer='$customer'";
     if (mysqli_query($conn, $qry)) {
         $_SESSION['flash_message'] = 'Request added successfully';
         $_SESSION['flash_message_class'] = 'success';
@@ -358,78 +354,38 @@ estate = '$estate', oname='$oname', age='$age'";
                                     <div class="form-group row">
                                         <div class="col-sm-4">
                                             <label for="firstName">Service</label>
-                                            <input type="text" placeholder="Service" name="service"  required maxlength="50" class="form-control">
+                                            <input type="text" placeholder="Service" name="service" required
+                                                   maxlength="50" class="form-control">
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="firstName">Salutation</label>
-                                            <input type="text" placeholder="Salutation" name="salutation"  required maxlength="50" class="form-control">
+                                            <input type="text" placeholder="Salutation" name="salutation" required
+                                                   maxlength="50" class="form-control">
                                         </div>
                                         <div class="col-sm-4">
-                                            <label for="firstName">Message</label>
-                                            <input type="text" placeholder="Message" name="message"  required maxlength="50" class="form-control">
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label for="firstName">First Name</label>
-                                            <input type="text" placeholder="First Name" name="fname"  required maxlength="50" class="form-control">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label for="firstName">Last Name</label>
-                                            <input type="text" placeholder="Last Name" name="lname"  required maxlength="50" class="form-control">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label for="firstName">Id Number</label>
-                                            <input type="text" placeholder="ID Number" name="idnumber"  required maxlength="50" class="form-control">
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-4">
-                                            <label for="firstName">Gender</label>
-                                            <select name="gender" required  class="form-control" >
+                                            <label for="firstName">Customer</label>
+                                            <select name="customer" class="form-control" required
+                                                    data-live-search="true">
                                                 <option value="">-select-</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
+                                                <?php
+                                                foreach ($customers as $c) {
+                                                    echo "<option value='" . $c['tid'] . "'>" . $c['name'] . "</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <label for="firstName">Email</label>
-                                            <input type="text" placeholder="Email" name="email"  required maxlength="50" class="form-control">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label for="firstName">Telephone Number</label>
-                                            <input type="text" placeholder="Telephone Number" name="tel"  required maxlength="50" class="form-control">
-                                        </div>
 
                                     </div>
 
 
                                     <div class="form-group row">
-                                        <div class="col-sm-3">
-                                            <label for="firstName">Town</label>
-                                            <input type="text" placeholder="Town" name="town"  required maxlength="50" class="form-control">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="firstName">Estate</label>
-                                            <input type="text" placeholder="Estate" name="estate"  required maxlength="50" class="form-control">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="firstName">Oname</label>
-                                            <input type="text" placeholder="Oname" name="oname"  required maxlength="50" class="form-control">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="firstName">Age</label>
-                                            <input type="number" placeholder="Age" name="age"  required min="5" class="form-control">
+                                        <div class="col-sm-12">
+                                            <label for="firstName">Message</label>
+                                                <textarea name="message" id="message" rows="30" class="form-control"
+                                                          required></textarea>
                                         </div>
 
                                     </div>
-
-
-
 
 
                                 </div>

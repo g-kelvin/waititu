@@ -173,24 +173,16 @@ if($con){
     if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
 	$service = $_POST['service'];
 	$salutation = $_POST['salutation'];
-	$fname = $_POST['fname'];
-	$lname = $_POST['lname'];
-	$idnumber = $_POST['idnumber'];
-	$gender = $_POST['gender'];
-	$email = $_POST['email'];
-	$tel = $_POST['tel'];
+
+	$userID = $_POST['userID'];
 	$massage = $_POST['massage'];
-    $oname = $_POST['oname'];
-    $age = $_POST['age'];
-    $town = $_POST['town'];
-    $estate = $_POST['estate'];
 
 
 
 
-$qry = mysqli_query ($con, "INSERT INTO request (service, salutation, fname, lname, idnumber, gender, email, tel, massage, status,oname,age,town,estate) VALUES ('$service', '$salutation', '$fname', '$lname', '$idnumber', '$gender', '$email', '$tel', '$massage','Unread','$oname','$age','town','$estate')");
+$qry = mysqli_query ($con, "INSERT INTO request (service, salutation, massage, status, customer) VALUES ('$service', '$salutation', '$massage','Unread', '$userID')");
 	if($qry){
-		echo "Thank You ".$fname." ".$lname." for Application of ".$service;
+		echo "Thank you for Application of ".$service;
 	}
 	else{
 		echo "error";

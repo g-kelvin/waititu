@@ -10,7 +10,7 @@ function dbConnect () {
 
 function checkLogin()
 {
-    $isLoggedIn = isset($_SESSION['user_id']);
+    $isLoggedIn = isset($_SESSION['user_type']);
     if (!$isLoggedIn) {
         $_SESSION['flash_message'] = "You need to login";
         $_SESSION['flash_message_class'] = "danger";

@@ -338,7 +338,7 @@ if (isset($_POST['servicep'])) {
                                     <div class="form-group row">
                                         <div class="col-sm-4">
                                             <label for="firstName">Service Provider</label>
-                                            <select name="servicep" required class="form-control">
+                                            <select name="servicep" required class="form-control" data-live-search="true">
                                                 <option value="">-select-</option>
                                                 <?php
                                                 foreach ($providers as $p) {

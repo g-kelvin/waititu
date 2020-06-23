@@ -2,6 +2,7 @@
 include 'api/data.php';
 checkLogin();
 $serviceProviders = fetchServiceProviders();
+$isCustomer = $_SESSION['user_type'] == 'customer';
 
 ?>
 <!DOCTYPE html>
@@ -202,7 +203,7 @@ $serviceProviders = fetchServiceProviders();
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>Service Provider</th>
                         <th>Business</th>
                         <th>ID Number</th>
                         <th>Phone</th>
@@ -212,7 +213,12 @@ $serviceProviders = fetchServiceProviders();
                         <th>Town</th>
                         <th>Estate</th>
                         <th>Education</th>
-                        <th>Actions</th>
+                        <?php
+                        if(!$isCustomer) {
+                            echo "<th>Actions</th>";
+                        }
+                        ?>
+
                     </tr>
                     </thead>
                     <?php
@@ -231,10 +237,13 @@ $serviceProviders = fetchServiceProviders();
                         <td>" . $s['town'] . "</td>
                         <td>" . $s['estate'] . "</td>
                         <td>" . $s['education'] . "</td>
-                        <td>
-                        <a href='/admin/view-serviceprovider.php?id=". $s['tid'] ."' class='btn btn-sm btn-info'>Update</a>
-                        <button class='btn btn-sm btn-danger' onclick='confirmClick(". $s['tid'] .")'>Delete</button>
-</td>
+                        <td>";
+                        if (!$isCustomer) {
+                            echo "<a href='/admin/view-serviceprovider.php?id=" . $s['tid'] . "' class='btn btn-sm btn-info'>Update</a>";
+                            echo "<button class='btn btn-sm btn-danger' onclick='confirmClick(" . $s['tid'] . ")'>Delete</button>";
+                        }
+                        echo "
+                        </td>
                        </tr>
                        ";
                     }
@@ -256,7 +265,7 @@ $serviceProviders = fetchServiceProviders();
                 <!-- START: page scripts -->
                 <script>
 
-                        ;(function ($) {
+                    ;(function ($) {
                         'use strict'
                         $(function () {
                             $('#example-icons').steps({
