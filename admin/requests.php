@@ -208,7 +208,12 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
                             $class = 'table-warning';
                             $btndelete = "<button class='btn btn-sm btn-danger' onclick='confirmClick(" . $r['request_id'] . ")'>Delete</button>";
                             $btn = "<a class='btn btn-success btn-sm' href='/admin/assign.php?id=" . $r['request_id'] . "'>Assign</a>";
-                        } elseif ($r['status'] == 'Active') {
+                        } elseif ($r['status'] == 'Active' && $_SESSION['user_type'] == 'service_provider') {
+                            $class = 'table-info';
+                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Mark as Done</a>
+<a class='btn btn-warning btn-sm' href='/admin/decline.php?id=" . $r['request_id'] . "'>Decline</a>";
+
+                        } elseif ($r['status'] == 'Active' && $_SESSION['user_type'] == 'admin') {
                             $class = 'table-info';
                             $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Mark as Done</a>";
                         } elseif ($r['status'] == 'MarkedDone' && $_SESSION['user_type'] == 'admin') {

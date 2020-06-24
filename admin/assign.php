@@ -7,6 +7,7 @@ if (isset($_POST['servicep'])) {
     $servicep = $_POST['servicep'];
     $conn = dbConnect();
     $res = mysqli_query($conn, "INSERT INTO request_servicep SET request_id=$id, servicep_id=$servicep");
+
     $res2 = mysqli_query($conn, "UPDATE request SET status='Active' WHERE tid=$id");
     redirect("./requests.php");
 }
