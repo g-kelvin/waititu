@@ -2,6 +2,7 @@
 include 'api/data.php';
 checkLogin();
 $requests = fetchRequests();
+$isCustomer = $_SESSION['user_type'] == 'customer';
 
 ?>
 <!DOCTYPE html>
@@ -192,7 +193,9 @@ $requests = fetchRequests();
                         <th>Estate</th>
                         <th>Status</th>
                         <th>Date</th>
-                        <th>Actions</th>
+                        <?php if (!$isCustomer) { ?>
+                            <th>Actions</th>
+                        <?php } ?>
                     </tr>
                     </thead>
                     <?php
@@ -203,16 +206,15 @@ $requests = fetchRequests();
                         $class = 'table-default';
                         if ($r['status'] == 'Unread') {
                             $class = 'table-warning';
-                            $btndelete = "<button class='btn btn-sm btn-danger' onclick='confirmClick(". $r['request_id'] .")'>Delete</button>";
-                            $btn = "<a class='btn btn-success btn-sm' href='/admin/assign.php?id=". $r['request_id'] . "'>Assign</a>";
+                            $btndelete = "<button class='btn btn-sm btn-danger' onclick='confirmClick(" . $r['request_id'] . ")'>Delete</button>";
+                            $btn = "<a class='btn btn-success btn-sm' href='/admin/assign.php?id=" . $r['request_id'] . "'>Assign</a>";
                         } elseif ($r['status'] == 'Active') {
                             $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=". $r['request_id'] ."'>Mark as Done</a>";
-                        } elseif ($r['status'] == 'MarkedDone' && $_SESSION['user_type'] == 'admin' ) {
+                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Mark as Done</a>";
+                        } elseif ($r['status'] == 'MarkedDone' && $_SESSION['user_type'] == 'admin') {
                             $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=". $r['request_id'] ."'>Finish</a>";
-                        }
-                        elseif ($r['status'] == 'Done' || $r['status'] == 'MarkedDone') {
+                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Finish</a>";
+                        } elseif ($r['status'] == 'Done' || $r['status'] == 'MarkedDone') {
                             $class = 'table-success';
                         }
                         echo "
@@ -220,21 +222,24 @@ $requests = fetchRequests();
                         <td>$no</td>
                         <td>" . $r['service'] . "</td>
                         <td>" . $r['fname'] . " " . $r['lname'] . "</td>
-                        <td>". $r['service_provider'] ."</td>
+                        <td>" . $r['service_provider'] . "</td>
                         <td>" . $r['massage'] . "</td>
                         <td>" . $r['town'] . "</td>
                         <td>" . $r['estate'] . "</td>
                         <td>" . $r['status'] . "</td>
-                        <td>" . $r['date_requested'] . "</td>
-                       
-                        <td>
+                        <td>" . $r['date_requested'] . "</td>";
+
+
+                        if (!$isCustomer) {
+                            echo "
+<td>
                             <div class='btn-group'>
                             $btn
                             $btndelete
                             </div>
-                        </td>
-                       </tr>
-                       ";
+                        </td>";
+                        }
+                        echo "</tr>";
                     }
                     ?>
                     </tbody>
@@ -252,7 +257,7 @@ $requests = fetchRequests();
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonText: 'Yes, Delete!',
-                        }).then( (result) => {
+                        }).then((result) => {
                             if (result.value) {
                                 window.location.href = `./delete_request.php?id=${id}`;
                             }

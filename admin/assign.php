@@ -1,8 +1,8 @@
 <?php
 include 'api/data.php';
 checkLogin();
-$providers = fetchServiceProviders();
 $id = $_GET['id'];
+$providers = fetchServiceProviders($id);
 if (isset($_POST['servicep'])) {
     $servicep = $_POST['servicep'];
     $conn = dbConnect();

@@ -172,7 +172,6 @@ $con= mysqli_connect("localhost","root", "","profwaititu");
 if($con){
     if(!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST'){
 	$service = $_POST['service'];
-	$salutation = $_POST['salutation'];
 
 	$userID = $_POST['userID'];
 	$massage = $_POST['massage'];
@@ -180,12 +179,12 @@ if($con){
 
 
 
-$qry = mysqli_query ($con, "INSERT INTO request (service, salutation, massage, status, customer) VALUES ('$service', '$salutation', '$massage','Unread', '$userID')");
+$qry = mysqli_query ($con, "INSERT INTO request (service_id, massage, status, customer) VALUES ('$service', '$massage','Unread', '$userID')");
 	if($qry){
-		echo "Thank you for Application of ".$service;
+		echo "<h3>Thank you for Application of service</h3><br /><p> <a style='color:steelblue' href='/admin/requests.php'>Follow it up here</a></p>";
 	}
 	else{
-		echo "error";
+		echo "error" . mysqli_error($con);
 	}
 
 }

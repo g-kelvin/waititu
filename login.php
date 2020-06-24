@@ -3,7 +3,7 @@
 
     if($con){
         $email = $_POST['email'];
-        $pass = $_POST['pass'] ;    
+        $pass = hash( 'ripemd160', $_POST['pass']);
         echo $pass;
         $qry="SELECT email, pass FROM clientregister WHERE email='$email' AND pass='$pass'";
         $qry="SELECT service FROM request where service ='service 2'";

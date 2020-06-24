@@ -1,6 +1,13 @@
 <?php
 include 'api/api.php';
 checkLogin();
+$con = mysqli_connect("localhost", "root", "", "profwaititu");
+$qry = "SELECT tid, name FROM service ORDER BY name";
+$res = mysqli_query($con, $qry);
+$services = array();
+while($row = mysqli_fetch_assoc($res)) {
+    array_push($services, $row);
+}
 
 ?>
 <!DOCTYPE html>
@@ -427,14 +434,24 @@ checkLogin();
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
+                                            <label for="lastName">Message</label>
+                                            <input type="text" maxlength="100" required placeholder="Message" name="message" class="form-control">
+                                        </div>
+                                        <div class="col-sm-4">
                                             <label for="firstName">Pass</label>
                                             <input type="text" placeholder="Pass" name="pass" required maxlength="20" class="form-control">
                                         </div>
-
-                                        <div class="col-sm-6">
-                                            <label for="lastName">Message</label>
-                                            <input type="text" maxlength="100" required placeholder="Message" name="message" class="form-control">
+                                        <div class="col-sm-4">
+                                            <label for="services">Services</label>
+                                            <select name="services[]"  multiple required  class="form-control" data-live-search="true">
+                                                <option value="">-select-</option>
+                                                <?php
+                                                foreach($services as $s) {
+                                                    echo "<option value='". $s['tid'] ."'>" . $s['name'] . "</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
 

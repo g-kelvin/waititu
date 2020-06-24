@@ -4,6 +4,13 @@ checkLogin();
 
 $id = $_GET['id'];
 $provider = fetchServiceProvider($id);
+$conn = mysqli_connect("localhost", "root", "", "profwaititu");
+$qry = "SELECT * FROM service ORDER BY name ASC";
+$res = mysqli_query($conn, $qry);
+$services = array();
+while ($row = mysqli_fetch_assoc($res)) {
+    array_push($services, $row);
+}
 
 ?>
 <!DOCTYPE html>
@@ -437,16 +444,27 @@ $provider = fetchServiceProvider($id);
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <label for="firstName">Pass</label>
                                             <input type="text" placeholder="Pass" name="pass" required maxlength="20"
                                                    class="form-control" value="<?php echo $provider['pass']; ?>">
                                         </div>
 
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-4">
                                             <label for="lastName">Message</label>
                                             <input type="text" maxlength="100" required placeholder="Message"
                                                    name="message" class="form-control" value="<?php echo $provider['message']; ?>">
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <label for="">Services</label>
+                                            <select name="services[]" required multiple data-live-search="true" class="form-control" >
+                                                <?php
+                                                foreach ($services as $s) {
+                                                    echo "<option value='". $s['tid'] ."'>". $s['name'] ."</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
 

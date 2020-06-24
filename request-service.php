@@ -2,6 +2,13 @@
 session_start();
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'customer') {
     $userID = $_SESSION['user_id'];
+    $conn = mysqli_connect("localhost", "root", "", "profwaititu");
+    $qry = "select tid, name from service order by name asc";
+    $res = mysqli_query($conn, $qry);
+    $services = array();
+    while($row = mysqli_fetch_assoc($res)) {
+        array_push($services, $row);
+    }
 } else {
     header("Location:./welcome.html");
 }
@@ -207,28 +214,18 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'customer') {
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="service" style="color: white">Choose a Service:</label>
-                                        <select name="service" type="text">
+                                        <select name="service" type="text" class="form-control" data-live-search="true">
                                             <option>---Select a Service---</option>
-                                            <option value="Service 1">Service 1</option>
-                                            <option value="Service 2">Service 2</option>
-                                            <option value="Service 3">Service 3</option>
-                                            <option value="Service 4">Service 4</option>
+                                            <?php
+                                            foreach ($services as $s) {
+                                                echo "<option value='". $s['tid'] ."'>". $s['name'] ."</option>";
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="cars" style="color: white">Salutation</label>
-                                        <select name="salutation" type="text">
-                                            <option>---Select---</option>
-                                            <option value="Mr">Mr</option>
-                                            <option value="Mrs">Mrs</option>
-                                            <option value="Rev">Rev</option>
-                                            <option value="Prof">Prof</option>
-                                        </select>
-                                    </div>
-                                </div>
+
                                 <input type="hidden" name="userID" value="<?php echo $userID; ?>" />
                                 <div class="col-12">
                                     <div class="form-group">

@@ -2,10 +2,16 @@
 
 include "api.php";
 
-function fetchServiceProviders()
+function fetchServiceProviders($requestId = 0)
 {
     $conn = dbConnect();
-    $qry = "SELECT * FROM servicep WHERE active=1 ORDER BY fname ASC ";
+    if ($requestId == 0) {
+        $qry = "SELECT * FROM servicep WHERE active=1 ORDER BY fname ASC ";
+    } else {
+        $qry = "SELECT * FROM servicep s
+INNER JOIN provider_service ps on s.tid = ps.provider_id
+WHERE s.active=1 AND ps.service_id=(select service_id from request where tid=$requestId) ORDER BY s.fname ASC;";
+    }
     $res = mysqli_query($conn, $qry);
     $data = array();
     while ($row = mysqli_fetch_assoc($res)) {
@@ -27,17 +33,20 @@ function fetchRequests()
 {
     $conn = dbConnect();
     if ($_SESSION['user_type'] == 'admin') {
-        $qry = "select r.tid as request_id, r.service, c.fname, c.lname, r.massage, c.town, c.estate, r.status, r.date_requested
-                from request r inner join clientregister c on r.customer = c.tid
+        $qry = "select r.tid as request_id, s.name as service, c.fname, c.lname, r.massage, c.town, c.estate, r.status, r.date_requested
+                from request r inner join clientregister c on r.customer = c.tid 
+                inner join service s on r.service_id = s.tid
                 ORDER BY IF (r.status = 'Active', 0, 1), r.status DESC, r.date_requested DESC;";
     } else if ($_SESSION['user_type'] == 'service_provider') {
-        $qry = "select r.tid as request_id, r.service, r.fname, r.lname, r.massage, r.town, r.estate, r.status, r.date_requested
+        $qry = "select r.tid as request_id, s.name as service, r.fname, r.lname, r.massage, r.town, r.estate, r.status, r.date_requested
                     from request r INNER JOIN request_servicep rs on r.tid = rs.request_id 
+                    inner join service s on r.service_id = s.tid
                     WHERE rs.servicep_id = " . $_SESSION['user_id'] . "
                     ORDER BY IF (r.status = 'Active', 0, 1), r.status DESC, r.date_requested DESC;";
     } else if ($_SESSION['user_type'] == 'customer') {
-        $qry = "select r.tid as request_id, r.service, c.fname, c.lname, r.massage, c.town, c.estate, r.status, r.date_requested
+        $qry = "select r.tid as request_id, s.name as service, c.fname, c.lname, r.massage, c.town, c.estate, r.status, r.date_requested
             FROM request r INNER JOIN clientregister c on r.customer = c.tid
+            inner join service s on r.service_id = s.tid
             WHERE c.tid = " . $_SESSION['user_id'] . "
             ORDER BY IF (r.status = 'Active', 0, 1), r.status DESC, r.date_requested DESC";
     }

@@ -24,6 +24,8 @@ function handleLogin($data)
     $email = $data['email_address'];
     $password = $data['password'];
     $qry = "SELECT * FROM users WHERE email='$email' AND password='$password' LIMIT 1";
+    echo $qry;
+
     $res = mysqli_query($conn, $qry);
     if (mysqli_num_rows($res) > 0) {
         $data = mysqli_fetch_assoc($res);

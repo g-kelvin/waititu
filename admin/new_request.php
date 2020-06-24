@@ -12,12 +12,11 @@ while ($row = mysqli_fetch_assoc($resCustomers)) {
 
 if (isset($_POST['service'])) {
     $service = $_POST['service'];
-    $salutation = $_POST['salutation'];
     $message = $_POST['message'];
     $status = 'Unread';
     $customer = $_POST['customer'];
 
-    $qry = "INSERT INTO request SET service='$service', salutation='$salutation', massage='$message', status='$status', customer='$customer'";
+    $qry = "INSERT INTO request SET service='$service',  massage='$message', status='$status', customer='$customer'";
     if (mysqli_query($conn, $qry)) {
         $_SESSION['flash_message'] = 'Request added successfully';
         $_SESSION['flash_message_class'] = 'success';
@@ -357,11 +356,7 @@ if (isset($_POST['service'])) {
                                             <input type="text" placeholder="Service" name="service" required
                                                    maxlength="50" class="form-control">
                                         </div>
-                                        <div class="col-sm-4">
-                                            <label for="firstName">Salutation</label>
-                                            <input type="text" placeholder="Salutation" name="salutation" required
-                                                   maxlength="50" class="form-control">
-                                        </div>
+
                                         <div class="col-sm-4">
                                             <label for="firstName">Customer</label>
                                             <select name="customer" class="form-control" required

@@ -4,7 +4,7 @@ session_start();
 
     if($con){
         $email = $_POST['email'];
-        $password = $_POST['password'] ;    
+        $password = hash('ripemd160', $_POST['password']) ;
 
         $qry="SELECT tid, email FROM clientregister WHERE email='$email' AND pass='$password' LIMIT 1";
             $result= mysqli_query($con,$qry);
