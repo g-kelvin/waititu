@@ -187,15 +187,25 @@
         $prof=$_POST['prof'];
         $address=$_POST['address'];
         $pass=$_POST['pass'];
+        $pass2 = $_POST['pass2'];
+        $service = $_POST['services'];
         $message=$_POST['message'];
 
-        $qry = mysqli_query ($con, "INSERT INTO servicep (fname, lname, oname, age, idnumber, gender, email, town, estate, tel, education, course, grade, prof, address, pass, message) VALUES ('$fname', '$lname', '$oname', '$age', '$idnumber', '$gender', '$email', '$town', '$estate', '$tel', '$education', '$course', '$grade', '$prof', '$address', '$pass', '$message')");
-        if($qry){
-        echo "Thank You ".$fname." ".$lname." for Registering  with us";
-    }
-    else{
-        echo "error";
-    }
+        if (hash('sha256', $pass) != hash('sha256', $pass2)) {
+            echo "Passwords don't match";
+        } else {
+            $qry = mysqli_query ($con, "INSERT INTO servicep (fname, lname, oname, age, idnumber, gender, email, town, estate, tel, education, course, grade, prof, address, pass, message) VALUES ('$fname', '$lname', '$oname', '$age', '$idnumber', '$gender', '$email', '$town', '$estate', '$tel', '$education', '$course', '$grade', '$prof', '$address', '$pass', '$message')");
+            if($qry){
+                $provider_id = mysqli_insert_id($con);
+                $qry2 = mysqli_query("INSERT INTO provider_service (provider_id, service_id) VALUES ($provider_id, $service)");
+                echo "Thank You ".$fname." ".$lname." for Registering  with us";
+            }
+            else{
+                echo "error registering";
+            }
+        }
+
+
 }
 
     }

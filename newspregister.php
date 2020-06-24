@@ -1,3 +1,13 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "", "profwaititu");
+$qry = "SELECT * FROM service ORDER BY name";
+$res = mysqli_query($conn, $qry);
+$services = array();
+while ($row = mysqli_fetch_assoc($res)) {
+    array_push($services, $row);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +26,7 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
 
 </head>
 
@@ -122,7 +133,7 @@
                                     <li><a href="post.html">Blog</a></li>
                                     <li><a href="#">Sign Up</a>
                                         <ul class="dropdown">
-                                            <li><a href="spregister.html">Register</a></li>
+                                            <li><a href="newspregister.php">Register</a></li>
                                             <li><a href="login.html">Login</a></li>
                                         </ul>
                                     </li>
@@ -251,9 +262,9 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="education" style="color: white">Which is your highest Education level ?</label>
-                                          <select name="education" type ="text">
-                                            <option>---Select a Service---</option>
+<!--                                                <label for="education" style="color: white">Which is your highest Education level ?</label>-->
+                                          <select name="education"  class="form-control" >
+                                            <option>Which is your highest Education level ?</option>
                                             <option value="Service 1">University</option>
                                             <option value="Service 2">College</option>
                                             <option value="Service 3">High School</option>
@@ -287,7 +298,28 @@
 
                                         <div class="col-lg-6">
                                             <div class="form-group">
+                                                <select name="services"  class="form-control" required>
+                                                    <option value="" selected>Services you offer</option>
+                                                    <?php
+                                                    foreach ($services as $s) {
+                                                        echo "<option value='". $s['tid'] ."'>" . $s['name']. "</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
                                                 <input type="password" class="form-control" name="pass" placeholder="Your Account Password"required>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <input type="password" class="form-control" name="pass2" placeholder="Repeat Password"required>
                                             </div>
                                         </div>
 
