@@ -3,6 +3,9 @@ include 'api/data.php';
 checkLogin();
 $serviceProviders = fetchServiceProviders();
 $isCustomer = $_SESSION['user_type'] == 'customer';
+if ($isCustomer) {
+    redirect("./requests.php");
+}
 
 ?>
 <!DOCTYPE html>

@@ -3,7 +3,7 @@ session_start();
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'customer') {
     $userID = $_SESSION['user_id'];
     $conn = mysqli_connect("localhost", "root", "", "profwaititu");
-    $qry = "select tid, name from service order by name asc";
+    $qry = "select tid, name, price from service order by name asc";
     $res = mysqli_query($conn, $qry);
     $services = array();
     while($row = mysqli_fetch_assoc($res)) {
@@ -208,7 +208,7 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'customer') {
                         </div>
                         <br>
 
-                        <form action="serviceform.php" method="post">
+                        <form action="paybill.php" method="post">
                             <div class="row">
 
                                 <div class="col-6">
@@ -218,7 +218,7 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'customer') {
                                             <option>---Select a Service---</option>
                                             <?php
                                             foreach ($services as $s) {
-                                                echo "<option value='". $s['tid'] ."'>". $s['name'] ."</option>";
+                                                echo "<option value='". $s['tid'] ."'>". $s['name'] ." (KES ". $s['price'] .")</option>";
                                             }
                                             ?>
                                         </select>

@@ -13,7 +13,7 @@ session_start();
                         $_SESSION['user_type'] = 'customer';
                         $_SESSION['user_id'] = $info['tid'];
                         echo "congratulation , login successful <br>";
-                        header('refresh:0.0000001;url=paybill.html');
+                        header('refresh:0.0000001;url=request-service.php');
                         
         }
             else{

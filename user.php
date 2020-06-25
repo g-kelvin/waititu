@@ -31,7 +31,7 @@ if ($con) {
             $id = mysqli_insert_id($con);
             $_SESSION['user_id'] = $id;
             $_SESSION['user_type'] = 'customer';
-             header('refresh:2;url=paybill.html');
+             header('refresh:2;url=request-service.php');
         } else {
             echo "error ". mysqli_error($con);
         }

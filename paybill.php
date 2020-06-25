@@ -1,4 +1,19 @@
-  <!DOCTYPE html>
+<?php
+
+if (isset($_POST['service'])) {
+    $message = $_POST['massage'];
+    $userId = $_POST['userID'];
+    $conn =  mysqli_connect("localhost", "root", "", "profwaititu");
+    $service_id = $_POST['service'];
+    $qry = "SELECT * FROM service WHERE tid='$service_id'";
+    $res = mysqli_query($conn, $qry);
+
+    $service = mysqli_fetch_assoc($res);
+
+}
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -175,25 +190,38 @@ Go to M-PESA on your phone<br>
 Select Pay Bill option<br>
 Enter Business no. <B>222189</B><br>
 Enter Your Name as <B>ACCOUNT NUMBER</B><BR>
-Enter the Amount<br>
+Enter the Amount :: <b>KES <?php echo $service['price']; ?></b> <br>
 Enter your M-PESA PIN and Send<br>
 You will receive a confirmation via SMS<br>
 Payment reflects on our office within 15 minutes<br>
-<br><!-- Single Service Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-service-area d-flex mb-100 wow fadeInUp" data-wow-delay="600ms">
-                        
-                        <div class="text">
-                            <h5>APPLY FOR SERVICE</h5>
-                            <p>
-                            <div class="cta-btn">
-                             <a href="request-service.php" class="btn credit-btn box-shadow">APPLY</a>
-                        </div>
+</center>
+
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <h5 class="title">Apply for service</h5>
+
+            <form action="serviceform.php" method="post">
+                <input type="hidden" name="service" value="<?php echo $service['tid']; ?>">
+                <input type="hidden" name="massage" value="<?php echo $message; ?>">
+                <input type="hidden" name="userID" value="<?php echo $userId; ?>">
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="code">MPESA Confirmation Code</label>
+                        <input type="text" class="form-control" name="mpesa_confirmation" placeholder="MPESA CONFIRMATION CODE" required maxlength="20">
                     </div>
+
                 </div>
 
-                <!-- Single Service Area -->
-</center>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button class="btn-info btn" type="submit">Apply</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
 
     
     <!-- ##### Footer Area Start ##### -->

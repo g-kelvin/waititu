@@ -175,11 +175,10 @@ if($con){
 
 	$userID = $_POST['userID'];
 	$massage = $_POST['massage'];
+	$confirmationCode = strtoupper($_POST['mpesa_confirmation']);
 
 
-
-
-$qry = mysqli_query ($con, "INSERT INTO request (service_id, massage, status, customer) VALUES ('$service', '$massage','Unread', '$userID')");
+$qry = mysqli_query ($con, "INSERT INTO request (service_id, massage, status, customer, mpesa_confirmation) VALUES ('$service', '$massage','Unread', '$userID', '$confirmationCode')");
 	if($qry){
 		echo "<h3>Thank you for Application of service</h3><br /><p> <a style='color:steelblue' href='/admin/requests.php'>Follow it up here</a></p>";
 	}

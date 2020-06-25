@@ -1,8 +1,20 @@
 <?php
-include 'api/data.php';
+include 'api/api.php';
 checkLogin();
-$requests = fetchRequests();
-$isCustomer = $_SESSION['user_type'] == 'customer';
+$con = mysqli_connect("localhost", "root", "", "profwaititu");
+
+if (isset($_POST['comment'])) {
+    $id = $_GET['id'];
+    $comment = mysqli_real_escape_string($con, $_POST['comment']);
+    $qry = "UPDATE request SET comment = '$comment' WHERE tid='$id'";
+    $r = mysqli_query($con, $qry);
+    if ($r) {
+
+        $message = "Your comment has been received.";
+    } else {
+        $message = "We are unable to take comments at the moment. Try again later";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -83,9 +95,6 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
     <script src="/vendors/d3-time-format/dist/d3-time-format.js"></script>
     <script src="/vendors/techan/dist/techan.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.css" id="theme-styles">
-
     <!-- CLEAN UI HTML ADMIN TEMPLATE MODULES-->
     <!-- v2.1.0 -->
     <link rel="stylesheet" type="text/css" href="/components/core/common/core.cleanui.css">
@@ -143,6 +152,146 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
 <body class="cui-config-borderless cui-menu-left-toggled cui-menu-colorful cui-menu-left-shadow">
 <div class="cui-initial-loading"></div>
 <div class="cui-layout cui-layout-has-sider">
+    <div class="cui-menu-right">
+        <div class="cui-menu-right-inner">
+            <div class="cui-menu-right-header">
+                <span class="fa fa-times pull-right cui-menu-right-action-toggle"><!-- --></span>
+                Theme Settings
+            </div>
+            <div class="cui-menu-right-content">
+                <div class="cui-menu-right-descr">
+                    This module "block-menu-right" gives possibility to construct custom blocks with any
+                    widgets, components and elements inside, like this theme settings
+                </div>
+                <div class="cui-menu-right-label">
+                    Theme Style
+                </div>
+                <div class="cui-menu-right-setting cui-menu-right-example-option">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-theme" value=""/> Dark
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-theme" value="cui-theme-light"/> Light
+                            </label>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-theme" value="cui-theme-green"/> Green
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-theme" value="cui-theme-blue"/> Blue
+                            </label>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-theme" value="cui-theme-red"/> Red
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-theme" value="cui-theme-orange"/> Orange
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="cui-menu-right-label">
+                    Menu Shadow
+                </div>
+                <div class="cui-menu-right-setting cui-menu-right-example-option">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-shadow" value="cui-menu-left-shadow"/> On
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-shadow" value=""/> Off
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="cui-menu-right-label">
+                    Borderless Cards
+                </div>
+                <div class="cui-menu-right-setting cui-menu-right-example-option">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-borderless" value="cui-config-borderless"/> On
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-borderless" value=""/> Off
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="cui-menu-right-label">
+                    Squared Corners
+                </div>
+                <div class="cui-menu-right-setting cui-menu-right-example-option">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-corners" value="cui-config-squared-corners"/> On
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-corners" value=""/> Off
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="cui-menu-right-label">
+                    Fixed Width
+                </div>
+                <div class="cui-menu-right-setting cui-menu-right-example-option">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-boxed" value="cui-config-fixed-width"/> On
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-boxed" value=""/> Off
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="cui-menu-right-label">
+                    Colorful Menu
+                </div>
+                <div class="cui-menu-right-setting cui-menu-right-example-option">
+                    <div class="btn-group btn-group-justified" data-toggle="buttons">
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-colorful" value="cui-menu-left-colorful"/> On
+                            </label>
+                        </div>
+                        <div class="btn-group">
+                            <label class="btn btn-default">
+                                <input type="radio" name="options-colorful" value=""/> Off
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <nav class="cui-menu-left">
         <div class="cui-menu-left-trigger cui-menu-left-trigger-action"></div>
         <div class="cui-menu-left-handler">
@@ -163,120 +312,70 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
                     />
                 </a>
             </div>
-
             <?php include 'common/menu.php' ?>
+
         </div>
     </nav>
     <div class="cui-layout">
-
         <div class="cui-layout-content">
             <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
 
           <span class="font-size-18 d-block">
               <strong><a href="/">Dashboard ></a> </strong>
-            <span class="text-muted">List of Requests</span>
+            <span class="text-muted">Add Comment</span>
           </span>
             </nav>
             <div class="cui-utils-content">
 
+                <?php if ($message) { ?>
+                    <div class="alert alert-info">
+                        <p><?php echo $message; ?></p>
+                    </div>
+                <?php } ?>
+                <!-- START: forms/form-wizard -->
+                <form action="" method="post" class="form" enctype="multipart/form-data">
 
-                <!-- START: mechanics table -->
-                <table class="table  table-bordered table-borderless">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Service</th>
-                        <th>Customer Name</th>
-                        <th>Service Provider</th>
-                        <th>Message</th>
-                        <th>Town</th>
-                        <th>Estate</th>
-                        <th>Status</th>
-                        <th>Comment</th>
-                        <th>Date</th>
+                    <section class="card">
+                        <div class="card-body">
+                            <input type="hidden" name="request" value="add"/>
+                            <div class="row">
 
-                            <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <?php
-                    foreach ($requests as $k => $r) {
-                        $no = $k + 1;
-                        $btn = '';
-                        $btndelete = '';
-                        $class = 'table-default';
-                        if ($r['status'] == 'Unread') {
-                            $class = 'table-warning';
-                            $btndelete = "<button class='btn btn-sm btn-danger' onclick='confirmClick(" . $r['request_id'] . ")'>Delete</button>";
-                            $btn = "<a class='btn btn-success btn-sm' href='/admin/assign.php?id=" . $r['request_id'] . "'>Assign</a>";
-                        } elseif ($r['status'] == 'Active' && $_SESSION['user_type'] == 'service_provider') {
-                            $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Mark as Done</a>
-<a class='btn btn-warning btn-sm' href='/admin/decline.php?id=" . $r['request_id'] . "'>Decline</a>";
+                                <div class="col-lg-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <label for="">Your Comment</label>
+                                            <textarea type="text"  name="comment" maxlength="512" required class="form-control"></textarea>
+                                        </div>
 
-                        } elseif ($r['status'] == 'Active' && $_SESSION['user_type'] == 'admin') {
-                            $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Mark as Done</a>";
-                        } elseif ($r['status'] == 'MarkedDone' && $_SESSION['user_type'] == 'admin') {
-                            $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Finish</a>";
-                        } elseif ($r['status'] == 'Done' || $r['status'] == 'MarkedDone') {
-                            $class = 'table-success';
-                        } elseif ($r['status'] == 'Done' && $_SESSION['user_type'] == 'customer') {
-                            $btn = "<a href='./comment.php?id=' class='btn btn-sm btn-info'>Comment</a>";
-                        }
-                        echo "
-                       <tr class='$class'>
-                        <td>$no</td>
-                        <td>" . $r['service'] . "</td>
-                        <td>" . $r['fname'] . " " . $r['lname'] . "</td>
-                        <td>" . $r['service_provider'] . "</td>
-                        <td>" . $r['massage'] . "</td>
-                        <td>" . $r['town'] . "</td>
-                        <td>" . $r['estate'] . "</td>
-                        <td>" . $r['status'] . "</td>
-                        <td>" . $r['comment'] . "</td>
-                        <td>" . $r['date_requested'] . "</td>";
+                                    </div>
 
-
-                        if (!$isCustomer) {
-                            echo "
-<td>
-                            <div class='btn-group'>
-                            $btn
-                            $btndelete
+                                </div>
                             </div>
-                        </td>";
-                        } else if ($isCustomer && $r['status'] == 'Done') {
-                            echo "<td><a href='./comment.php?id=". $r['request_id'] ."' class='btn btn-sm btn-info'>Comment</a></td>";
-                        } else {
-                            echo "<td></td>";
-                        }
-                        echo "</tr>";
-                    }
-                    ?>
-                    </tbody>
-                </table>
+                        </div>
+                    </section>
 
 
-                <!-- END: mechanics table -->
+                    <section class="card">
+                        <div class="card-body">
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <p class="text-muted">Confirm the information provided above before submitting</5>
+                                    <div class="form-group row">
+                                        <div class="col-sm-4">
+                                            <button class="btn btn-success btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </form>
+                <!-- END: forms/form-wizard -->
 
                 <!-- START: page scripts -->
                 <script>
-                    function confirmClick(id) {
-                        Swal.fire({
-                            title: 'Delete Request',
-                            text: 'This action is not reversible',
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: 'Yes, Delete!',
-                        }).then((result) => {
-                            if (result.value) {
-                                window.location.href = `./delete_request.php?id=${id}`;
-                            }
-                        })
-
-
-                    }
                     ;(function ($) {
                         'use strict'
                         $(function () {
@@ -293,9 +392,17 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
                                 transitionEffect: 'slideLeft',
                                 autoFocus: true,
                             })
+                            $('#isOwner').on('change', function () {
+                                let isOwner = $('#isOwner').val();
+                                if (isOwner === "No") {
+                                    window.location.href = "./mechanics.only.add";
+                                }
+                            })
                         })
                     })(jQuery)
                 </script>
+
+
                 <!-- END: page scripts -->
             </div>
         </div>

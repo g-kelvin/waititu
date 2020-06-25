@@ -1,4 +1,3 @@
-
 CREATE TABLE `clientregister` (
   `tid` int NOT NULL AUTO_INCREMENT,
   `salutation` varchar(100) DEFAULT NULL,
@@ -35,6 +34,9 @@ CREATE TABLE `request` (
   `date_requested` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `customer` int DEFAULT NULL,
   `service_id` int DEFAULT NULL,
+  `paid` varchar(100) DEFAULT 'PENDING',
+  `mpesa_confirmation` varchar(100) DEFAULT '',
+  `comment` varchar(512) DEFAULT '',
   PRIMARY KEY (`tid`),
   KEY `customer` (`customer`),
   KEY `service_id` (`service_id`),
@@ -58,9 +60,9 @@ CREATE TABLE `request_servicep` (
 CREATE TABLE `service` (
   `tid` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
+  `price` float(10,2) DEFAULT '0.00',
   PRIMARY KEY (`tid`)
 );
-INSERT INTO `service` VALUES (1,'Hair Cut'),(2,'Washing Clothes'),(3,'Delivery'),(4,'Food');
 
 CREATE TABLE `servicep` (
   `tid` int NOT NULL AUTO_INCREMENT,
@@ -92,4 +94,5 @@ CREATE TABLE `users` (
   `password` varchar(50) NOT NULL,
   PRIMARY KEY (`tid`)
 );
+
 INSERT INTO `users` VALUES (1,'Kelvin Gauki','kelvingauki@gmail.com','kelvingauki');

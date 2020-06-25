@@ -1,7 +1,7 @@
 <?php
 include 'api/data.php';
 checkLogin();
-$requests = fetchRequests();
+$requests = fetchUnpaidRequests();
 $isCustomer = $_SESSION['user_type'] == 'customer';
 
 ?>
@@ -174,7 +174,7 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
 
           <span class="font-size-18 d-block">
               <strong><a href="/">Dashboard ></a> </strong>
-            <span class="text-muted">List of Requests</span>
+            <span class="text-muted">List of  Unpaid Requests</span>
           </span>
             </nav>
             <div class="cui-utils-content">
@@ -192,10 +192,10 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
                         <th>Town</th>
                         <th>Estate</th>
                         <th>Status</th>
-                        <th>Comment</th>
                         <th>Date</th>
+                        <th>MPESA CODE</th>
+                        <th>Actions</th>
 
-                            <th>Actions</th>
                     </tr>
                     </thead>
                     <?php
@@ -204,26 +204,7 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
                         $btn = '';
                         $btndelete = '';
                         $class = 'table-default';
-                        if ($r['status'] == 'Unread') {
-                            $class = 'table-warning';
-                            $btndelete = "<button class='btn btn-sm btn-danger' onclick='confirmClick(" . $r['request_id'] . ")'>Delete</button>";
-                            $btn = "<a class='btn btn-success btn-sm' href='/admin/assign.php?id=" . $r['request_id'] . "'>Assign</a>";
-                        } elseif ($r['status'] == 'Active' && $_SESSION['user_type'] == 'service_provider') {
-                            $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Mark as Done</a>
-<a class='btn btn-warning btn-sm' href='/admin/decline.php?id=" . $r['request_id'] . "'>Decline</a>";
 
-                        } elseif ($r['status'] == 'Active' && $_SESSION['user_type'] == 'admin') {
-                            $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Mark as Done</a>";
-                        } elseif ($r['status'] == 'MarkedDone' && $_SESSION['user_type'] == 'admin') {
-                            $class = 'table-info';
-                            $btn = "<a class='btn btn-info btn-sm' href='/admin/finish.php?id=" . $r['request_id'] . "'>Finish</a>";
-                        } elseif ($r['status'] == 'Done' || $r['status'] == 'MarkedDone') {
-                            $class = 'table-success';
-                        } elseif ($r['status'] == 'Done' && $_SESSION['user_type'] == 'customer') {
-                            $btn = "<a href='./comment.php?id=' class='btn btn-sm btn-info'>Comment</a>";
-                        }
                         echo "
                        <tr class='$class'>
                         <td>$no</td>
@@ -234,24 +215,14 @@ $isCustomer = $_SESSION['user_type'] == 'customer';
                         <td>" . $r['town'] . "</td>
                         <td>" . $r['estate'] . "</td>
                         <td>" . $r['status'] . "</td>
-                        <td>" . $r['comment'] . "</td>
-                        <td>" . $r['date_requested'] . "</td>";
+                        <td>" . $r['date_requested'] . "</td>
+                        <td>" . $r['mpesa_confirmation'] . "</td>
+                        <td>
+                        <a href='./confirm_payment.php?id=". $r['request_id'] ."' class='btn btn-info btn-sm'>Confirm</a>
+</td>
+                        </tr>";
 
 
-                        if (!$isCustomer) {
-                            echo "
-<td>
-                            <div class='btn-group'>
-                            $btn
-                            $btndelete
-                            </div>
-                        </td>";
-                        } else if ($isCustomer && $r['status'] == 'Done') {
-                            echo "<td><a href='./comment.php?id=". $r['request_id'] ."' class='btn btn-sm btn-info'>Comment</a></td>";
-                        } else {
-                            echo "<td></td>";
-                        }
-                        echo "</tr>";
                     }
                     ?>
                     </tbody>
