@@ -27,7 +27,7 @@
                             <span class="cui-menu-left-title">Add Provider</span>
                         </a>
 
-                        <a href="/admin/new_service.php">
+                        <a href="/admin/add_service.php">
                             <span class="cui-menu-left-icon icmn-plus"></span>
                             <span class="cui-menu-left-title">Add Service</span>
                         </a>
